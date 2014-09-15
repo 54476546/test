@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dev/!svn/ver/51411/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache
+END
+InternetSubscriberCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/dev/!svn/ver/42699/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache/InternetSubscriberCache.java
+END
+ChannelTimeProgramCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/dev/!svn/ver/42699/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache/ChannelTimeProgramCache.java
+END
+ProgramContentCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/dev/!svn/ver/42699/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache/ProgramContentCache.java
+END
+SubscriberCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/dev/!svn/ver/42699/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache/SubscriberCache.java
+END
+TVODProgramCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/dev/!svn/ver/42699/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache/TVODProgramCache.java
+END
+TVODContentCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/dev/!svn/ver/42699/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache/TVODContentCache.java
+END
+ServiceChannelCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/dev/!svn/ver/42699/trunk/code/Parser/LogParser/src/com/hisense/hitv/cache/ServiceChannelCache.java
+END

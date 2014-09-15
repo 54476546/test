@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="LogFile">
+
+    <typeAlias alias="logFileVO" type="com.hisense.hitv.log.logfile.domain.LogFileVO"/>
+
+    <insert id="insertLogFile">
+        insert into LogFile(FILENAME, FILESIZE, RECORDNUMBER, PROCESSENDDATE, LOGFILETYPE, PROCESSSTARTDATE, ERRORNUMBER)
+        values(#fileName#,#fileSize#,#recordNumber#,gmtsysdate, #logFileType#, #processStartDate#, #errorNumber#)
+    </insert>
+
+    <resultMap id="LogFile-Result-List" class="logFileVO">
+        <result property="fileName" column="FILENAME"/>
+        <result property="fileSize" column="FILESIZE"/>
+        <result property="recordNumber" column="RECORDNUMBER"/>
+        <result property="processEndDate" column="PROCESSENDDATE"/>
+        <result property="logFileType" column="LOGFILETYPE"/>
+        <result property="processStartDate" column="PROCESSSTARTDATE"/>
+        <result property="errorNumber" column="ERRORNUMBER"/>
+    </resultMap>
+
+    <select id="getLogFileByFileName" resultMap="LogFile-Result-List" parameterClass="java.lang.String">
+        select FILENAME, FILESIZE, RECORDNUMBER, PROCESSENDDATE, LOGFILETYPE, PROCESSSTARTDATE, ERRORNUMBER
+        from LogFile
+        where filename = #fileName#
+    </select>
+    <select id="getCurrentDBTime" resultClass="java.util.Date">
+        select gmtsysdate from dual
+    </select>
+
+</sqlMap>

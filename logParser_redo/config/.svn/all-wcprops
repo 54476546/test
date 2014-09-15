@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dev/!svn/ver/51712/trunk/code/Parser/LogParser/config
+END
+format.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dev/!svn/ver/50155/trunk/code/Parser/LogParser/config/format.cfg
+END
+log4j.properties
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dev/!svn/ver/33881/trunk/code/Parser/LogParser/config/log4j.properties
+END
+sys_conf.properties
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dev/!svn/ver/60749/trunk/code/Parser/LogParser/config/sys_conf.properties
+END

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+
+<service_bundle type='manifest' name='logparser'>
+
+<service name='application/server/logparser' type='service' version='1'>
+
+<single_instance />
+
+<dependency
+
+name='filesystem'
+
+grouping='require_all'
+
+restart_on='none'
+
+type='service'>
+
+<service_fmri value='svc:/system/filesystem/local' />
+
+</dependency>
+<exec_method 
+
+type='method' 
+
+name='start'
+
+exec='/usr/logparser/sh/logparser_start.sh'
+
+timeout_seconds='300' />
+
+<exec_method 
+
+type='method' 
+
+name='stop'
+
+exec='/usr/logparser/sh/logparser_stop.sh'
+
+timeout_seconds='300' />
+
+<instance name='default' enabled='true' />
+
+<stability value='Unstable' />
+
+<template>
+
+<common_name>
+
+<loctext xml:lang='C'>LogParser 2.2</loctext>
+
+</common_name>
+
+</template>
+
+</service>
+
+</service_bundle>
+

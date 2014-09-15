@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hitv SYSTEM "log_Model.dtd">
+<hitv>
+	<netype id="sdps" logfiletype="15">
+		<key>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</key>
+		<global>
+			<property id="logFileName" defualt="logfilename"/>
+			<property id="createdDate" defualt="today"/>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</global>		
+		<!-- stv4.0 追加 -->
+		<log id="SPUpgrade">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="requestTime" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="reponseTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="ip" index="5" nullEnable="true"/>
+				<property id="currentVersion" index="6" nullEnable="true"/>
+				<property id="nextVersion" index="7" nullEnable="true"/>
+				<property id="isUpgrade" index="8" nullEnable="true"/>
+				<property id="upgradeType" index="9" nullEnable="true"/>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<!--  <checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="time"/>
+				</check>
+			</checks> -->
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertSDPSSmartUpgradeLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="SPUpgrade">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.1" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="requestTime" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="reponseTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="areaId" index="5" nullEnable="true"/>
+				<property id="ip" index="6" nullEnable="true"/>
+				<property id="currentVersion" index="7" nullEnable="true"/>
+				<property id="nextVersion" index="8" nullEnable="true"/>
+				<property id="isUpgrade" index="9" nullEnable="true"/>
+				<property id="upgradeType" index="10" nullEnable="true"/>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<!--  <checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="time"/>
+				</check>
+			</checks> -->
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertSTV42SDPSSmartUpgradeLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+	</netype>
+</hitv>

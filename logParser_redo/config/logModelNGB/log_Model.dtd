@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT hitv (netype) >
+<!ELEMENT netype (key,global?,log+)>
+<!ATTLIST netype id ID #REQUIRED>
+<!ATTLIST netype logfiletype CDATA #REQUIRED>
+<!ELEMENT key (property)+>
+<!ELEMENT global (property)+>
+<!ELEMENT log (primarykey,properties,checks?,actionmap)>
+<!ATTLIST log id CDATA #REQUIRED>
+<!-- log key:propertyid 
+<!ATTLIST log version CDATA #REQUIRED>
+<!ATTLIST log type CDATA #REQUIRED>-->
+<!ELEMENT primarykey (keyproperty)+>
+<!ELEMENT keyproperty (value)+>
+<!ATTLIST keyproperty id CDATA #REQUIRED>
+<!ELEMENT value EMPTY>
+<!ATTLIST value data CDATA #REQUIRED>
+<!ELEMENT properties (property)+>
+<!ELEMENT checks (check)+>
+<!ELEMENT check (property|config)+>
+<!ATTLIST check id CDATA #REQUIRED>
+<!ELEMENT config EMPTY>
+<!ATTLIST config id CDATA #REQUIRED>
+<!ELEMENT property (convert)?>
+<!-- check property id:properties??-->
+<!ATTLIST property id CDATA #REQUIRED>
+<!ATTLIST property index CDATA #IMPLIED>
+<!ATTLIST property defualt CDATA #IMPLIED>
+<!ATTLIST property maxlen CDATA #IMPLIED>
+<!ATTLIST property nullEnable CDATA #IMPLIED>
+<!ELEMENT convert (calculate|format|cache)+>
+<!ELEMENT calculate EMPTY>
+<!ATTLIST calculate expression CDATA #REQUIRED>
+<!ELEMENT format EMPTY>
+<!ATTLIST format type (date|week|month|signum|length|defualt2null|long|msdate) #REQUIRED>
+<!ATTLIST format ref CDATA #IMPLIED>
+<!ELEMENT cache EMPTY>
+<!ATTLIST cache prefix (subdev|submac|subvsp|subdevc|macsub|tvodProgram|tvodContent|vod|sercha) #REQUIRED>
+<!ATTLIST cache ref CDATA #REQUIRED>
+<!ATTLIST cache casevalue CDATA #IMPLIED>
+<!ATTLIST cache caseref CDATA #IMPLIED>
+<!ELEMENT actionmap (action)+>
+<!ELEMENT action (insert|update|delete)+>
+<!ATTLIST action dbtype (oracle|mysql) #REQUIRED>
+<!ELEMENT insert EMPTY>
+<!ATTLIST insert sqlid CDATA #REQUIRED>
+<!ATTLIST insert namespace CDATA #REQUIRED>
+<!ELEMENT update EMPTY>
+<!ATTLIST update sqlid CDATA #REQUIRED>
+<!ATTLIST update namespace CDATA #REQUIRED>
+<!ELEMENT delete EMPTY>
+<!ATTLIST delete sqlid CDATA #REQUIRED>
+<!ATTLIST delete namespace CDATA #REQUIRED>

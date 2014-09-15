@@ -1,0 +1,162 @@
+package com.hisense.hitv.cache;
+
+import com.hisense.hitv.service.LogParserService;
+import com.hisense.hitv.subscriber.domain.SubscriberVO;
+import com.hisense.hitv.subscriber.persistence.ISubscriberDao;
+import com.opensymphony.oscache.general.GeneralCacheAdministrator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Subscriber Cache操作类，提供cache中追加、移除、初期化等功能。
+ * @author zhoudi
+ * @version 1.0
+ */
+public class SubscriberCache {
+    /**
+     * 下划线
+     */
+    private static final String UNDERLINE = "_";
+
+    private static final Log LOG = LogFactory.getLog(SubscriberCache.class);
+    private static final Integer MAX_PAGE_ROW_NUMBER = 4000;
+
+    private String keyPrefixSubscriberIdDev; // 关键字前缀字符;
+    private String keyPrefixSubscriberIDMac; // 关键字前缀字符;
+    private String keyPrefixMacSubscriberID; // 关键字前缀字符;
+    private String keyPrefixSubscriberVSPID; // 关键字前缀字符;
+
+    private GeneralCacheAdministrator cacheAdministrator;
+    private ISubscriberDao subscriberDao;
+
+    /**
+     * @param keyPrefixSubscriberIdDev the keyPrefixSubscriberIdDev to set
+     */
+    public void setKeyPrefixSubscriberIdDev(String keyPrefixSubscriberIdDev) {
+        this.keyPrefixSubscriberIdDev = keyPrefixSubscriberIdDev;
+    }
+
+    /**
+     * @param keyPrefixSubscriberIDMac the keyPrefixSubscriberIDMac to set
+     */
+    public void setKeyPrefixSubscriberIDMac(String keyPrefixSubscriberIDMac) {
+        this.keyPrefixSubscriberIDMac = keyPrefixSubscriberIDMac;
+    }
+
+    /**
+     * @param keyPrefixMacSubscriberID the keyPrefixMacSubscriberID to set
+     */
+    public void setKeyPrefixMacSubscriberID(String keyPrefixMacSubscriberID) {
+        this.keyPrefixMacSubscriberID = keyPrefixMacSubscriberID;
+    }
+
+    /**
+     * @param keyPrefixSubscriberVSPID the keyPrefixSubscriberVSPID to set
+     */
+    public void setKeyPrefixSubscriberVSPID(String keyPrefixSubscriberVSPID) {
+        this.keyPrefixSubscriberVSPID = keyPrefixSubscriberVSPID;
+    }
+
+    /**
+     * @param cacheAdministrator the cacheAdministrator to set
+     */
+    public void setCacheAdministrator(GeneralCacheAdministrator cacheAdministrator) {
+        this.cacheAdministrator = cacheAdministrator;
+    }
+
+    /**
+     * @param subscriberDao the subscriberDao to set
+     */
+    public void setSubscriberDao(ISubscriberDao subscriberDao) {
+        this.subscriberDao = subscriberDao;
+    }
+
+    /**
+     * cache中追加SubscirberIdDevice记录
+     * @param key 键值
+     * @param value value值
+     */
+    public void putSubscirberIdDevice(Object key, Object value) {
+        cacheAdministrator.putInCache(this.keyPrefixSubscriberIdDev + UNDERLINE + key, value);
+    }
+
+    /**
+     * cache中追加MacSubscriberId记录
+     * @param key 键值
+     * @param value value值
+     */
+    public void putMacSubscriberId(Object key, Object value) {
+        cacheAdministrator.putInCache(this.keyPrefixMacSubscriberID + UNDERLINE + key, value);
+    }
+
+    /**
+     * cache中追加SubscriberIdMac记录
+     * @param key 键值
+     * @param value value值
+     */
+    public void putSubscriberIdMac(Object key, Object value) {
+        cacheAdministrator.putInCache(this.keyPrefixSubscriberIDMac + UNDERLINE + key, value);
+    }
+
+    /**
+     * cache中追加SubscriberVSPId记录
+     * @param key 键值
+     * @param value value值
+     */
+    public void putSubscriberVSPId(Object key, Object value) {
+        cacheAdministrator.putInCache(this.keyPrefixSubscriberVSPID + UNDERLINE + key, value);
+    }
+
+    /**
+     * 移除cache中所有记录
+     */
+    public void removeAll() {
+        cacheAdministrator.flushAll();
+    }
+
+    /**
+     * 初期化cache
+     */
+    public void initCache() {
+        // NGB系统使用cache
+        if (LogParserService.getCurLGType() == LogParserService.LGTYPE_NGB40) { 
+            try {
+                removeAll();
+                Integer subCount = subscriberDao.getSubscriberCount();
+                Integer maxPageRowNum = MAX_PAGE_ROW_NUMBER;
+                SubscriberVO subVO = new SubscriberVO();
+                List<SubscriberVO> subscribers = new ArrayList<SubscriberVO>();
+                LOG.info("Subscriber cache");
+                for (int rowNum = 0; rowNum < subCount; rowNum = rowNum + maxPageRowNum + 1) {
+                    //System.out.println("rowNum:" + rowNum);
+                    subVO.setStartRownum(rowNum);
+                    subVO.setEndRownum(rowNum + maxPageRowNum);
+                    subscribers.clear();
+                    subscribers = subscriberDao.getSubscribers(subVO);
+                    LOG.debug("****List<SubscriberVO> size:" + subscribers.size());
+                    for (SubscriberVO subscriberVO : subscribers) {
+                        this.putSubscirberIdDevice(subscriberVO.getSubscriberId(), subscriberVO.getDeviceId());
+                        this.putSubscriberIdMac(subscriberVO.getSubscriberId(), subscriberVO.getMac());
+                        // 保持原有逻辑
+                        if (LogParserService.getCurLGType() == LogParserService.LGTYPE_STV
+                            || LogParserService.getCurLGType() == LogParserService.LGTYPE_NGB30) {
+                            this.putSubscriberVSPId(subscriberVO.getSubscriberId(), subscriberVO.getAdministrator());
+                        } else {
+                            this.putSubscriberVSPId(subscriberVO.getSubscriberId(), subscriberVO.getPartnerId());
+                        }
+    
+                        if (subscriberVO.getMac() != null && !"".equals(subscriberVO.getMac())) {
+                            this.putMacSubscriberId(subscriberVO.getMac(), subscriberVO.getSubscriberId());
+                        }
+                    }
+                }
+            } catch (DataAccessException e) {
+                LOG.error(e);
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/dev/!svn/ver/50486/trunk/code/Parser/LogParser/sh
+END
+logparser_start.sh
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dev/!svn/ver/50486/trunk/code/Parser/LogParser/sh/logparser_start.sh
+END
+logparser_stop.sh
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dev/!svn/ver/24365/trunk/code/Parser/LogParser/sh/logparser_stop.sh
+END
+logparser.xml
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dev/!svn/ver/24365/trunk/code/Parser/LogParser/sh/logparser.xml
+END

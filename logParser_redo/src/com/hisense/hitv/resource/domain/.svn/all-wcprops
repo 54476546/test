@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/dev/!svn/ver/49402/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain
+END
+LogXmlValidationVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/dev/!svn/ver/54902/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain/LogXmlValidationVO.java
+END
+LogXmlActionItemVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain/LogXmlActionItemVO.java
+END
+LogXmlCheckItemVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain/LogXmlCheckItemVO.java
+END
+LogXmlConvertVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain/LogXmlConvertVO.java
+END
+LogXmlLogVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/dev/!svn/ver/39213/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain/LogXmlLogVO.java
+END
+LogXmlPropertyItemVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/dev/!svn/ver/54902/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain/LogXmlPropertyItemVO.java
+END
+LogXmlNetypeVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/dev/!svn/ver/39213/trunk/code/Parser/LogParser/src/com/hisense/hitv/resource/domain/LogXmlNetypeVO.java
+END

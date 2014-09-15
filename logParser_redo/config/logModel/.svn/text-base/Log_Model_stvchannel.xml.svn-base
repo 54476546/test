@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hitv SYSTEM "log_Model.dtd">
+<hitv>
+	<netype id="stvchannel" logfiletype="8">
+		<key>
+			<property id="version" index="0"/>
+		</key>
+		<global>
+			<property id="logFileName" defualt="logfilename"/>
+			<property id="createdDate" defualt="today"/>
+			<property id="version" index="0"/>
+			<property id="type" defualt="0"/>
+		</global>
+		<log id="stvchannel">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="viewLogId"/>
+				<property id="subscriberId"/>
+				<property id="mac" index="1"/>
+				<property id="channelName" index="3"/>
+				<property id="viewTime" index="2">
+					<convert>
+						<format type="date15str"/>
+					</convert>
+				</property>
+				<property id="status" index="4"/>
+				<property id="valid" defualt="1"/>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="mac"/>
+					<property id="viewTime"/>
+					<property id="status"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertSTVChannelLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+	</netype>
+</hitv>

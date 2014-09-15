@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename">
+            <value>messages</value>
+        </property>
+    </bean>
+
+    <!--view log rate-->
+    <bean id="logFileConfig" class="com.hisense.hitv.util.LogFileConfig">
+        <constructor-arg index="0" value="/usr/logparser/config/sys_conf.properties"/>
+        <property name="errorFileBackupPath" value="${ErrorFileBackupPath}"/>
+        <property name="fileBackupPath" value="${FileBackupPath}"/>
+        <property name="redoFileBackupPath" value="${RedoFileBackupPath}"/>
+        <property name="logFilePath" value="${LogFilePath}"/>
+        <property name="logFileType" value="${LogFileType}"/>
+        <property name="zipFileType" value="${ZipFileType}"/>
+    </bean>
+    
+    <!-- log模板读取  -->
+    <bean id="logXmlParseDao" class="com.hisense.hitv.resource.persistence.LogXmlParseDao"/>
+    <!--定时工作列表-->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref local="logReparseServiceTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="logReparseServiceTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref local="logReparseMethod"/>
+        </property>
+        <property name="cronExpression">
+            <value>${log_reparse_time}</value>
+        </property>
+    </bean>
+    
+    <bean id="logReparseMethod"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref local="logReparseService"/>
+        </property>
+        <property name="targetMethod">
+            <value>doService</value>
+        </property>
+    </bean>
+
+    <bean id="compressLogFile" class="com.hisense.hitv.compress.GZIPCompressImpl"/>
+
+    <bean id="stringDataFilter" class="com.hisense.hitv.filter.DataFilterImpl"/>
+
+    <!--view log file-->
+    <bean id="logFileFacade" class="com.hisense.hitv.log.logfile.service.LogFileFacadeImpl">
+        <property name="logFileDao">
+            <ref bean="logFileDao"/>
+        </property>
+    </bean>
+
+    <!-- log parse -->
+    <bean id="parseLogFile" class="com.hisense.hitv.parse.LogFileParser" singleton="false">
+        <property name="stringDataFilter">
+            <ref local="stringDataFilter"/>
+        </property>
+        <property name="compressLogFile">
+            <ref local="compressLogFile"/>
+        </property>
+        <property name="logFileConfig">
+            <ref local="logFileConfig"/>
+        </property>
+        <property name="logFileFacade">
+            <ref local="logFileFacade"/>
+        </property>
+        <property name="hitvLogParseSqlDao">
+            <ref bean="hitvLogParseSqlDao"/>
+        </property>
+        <property name="systemConfigDao">
+            <ref bean="systemConfigSqlDao"/>
+        </property>
+    </bean>
+    <bean id="asynService" class="com.googlecode.asyn4j.spring.AsynServiceFactoryBean">
+		<!--设置自定义相关参数-->
+		<!--(maxCacheWork)最大工作队列缓存工作数 – 300(默认值) -->
+		<!--(addWorkWaitTime)当工作队列满时添加工作等待时间- Long.MAX_VALUE(默认值) -->
+		<!--(workThreadNum)异步工作执行线程池大小 - CPU核数/2 +1(默认值) -->
+		<!--(callBackThreadNum)回调执行线程池大小 - CPU核数/2(默认值) -->
+		<!--(closeServiceWaitTime) 服务关闭等待时间 - 60000s(默认值) -->
+		<property name="maxCacheWork" value="${maxCacheWork}"></property>
+		<property name="addWorkWaitTime" value="${addWorkWaitTime}"></property>
+		<property name="workThreadNum" value="${workThreadNum}"></property>
+		<property name="callbackThreadNum" value="${callbackThreadNum}"></property>
+		<property name="closeServiceWaitTime" value="${closeServiceWaitTime}"></property>
+		<!--添加相关处理器-->                  
+		<property name="errorAsynWorkHandler">
+			<bean class="com.googlecode.asyn4j.core.handler.DefaultErrorAsynWorkHandler"/>
+		</property>
+		<property name="workQueueFullHandler">
+			<bean class="com.googlecode.asyn4j.core.handler.CacheAsynWorkHandler"/>
+		</property>
+	</bean>
+	
+	<bean id="logReparseService" class="com.hisense.hitv.service.LogReparseService">
+        <property name="compressLogFile">
+            <ref local="compressLogFile"/>
+        </property>
+        <property name="logFileConfig">
+            <ref local="logFileConfig"/>
+        </property>
+    </bean>
+</beans>

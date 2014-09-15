@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/dev/!svn/ver/51712/trunk/code/Parser/LogParser
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/.classpath
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dev/!svn/ver/43430/trunk/code/Parser/LogParser/.project
+END
+build_rpm.sh
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dev/!svn/ver/59114/trunk/code/Parser/LogParser/build_rpm.sh
+END
+logparser.spec
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dev/!svn/ver/60737/trunk/code/Parser/LogParser/logparser.spec
+END
+check_build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dev/!svn/ver/58244/trunk/code/Parser/LogParser/check_build.xml
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dev/!svn/ver/59114/trunk/code/Parser/LogParser/build.xml
+END
+logparser.iml
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dev/!svn/ver/24370/trunk/code/Parser/LogParser/logparser.iml
+END

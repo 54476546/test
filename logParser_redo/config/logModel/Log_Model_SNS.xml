@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hitv SYSTEM "log_Model.dtd">
+<hitv>
+	<netype id="snsportal" logfiletype="18">
+		<key>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</key>
+		<global>
+			<property id="logFileName" defualt="logfilename"/>
+			<property id="createdDate" defualt="today"/>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</global>
+		<log id="SNSPortal">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="action" index="4">
+					<validations>
+						<validation id="isValid" params="file_unreads, file_shared"/>
+					</validations>
+				</property>
+				<property id="pageUrl" index="5">
+					<convert>
+						<format type="length" ref="2048"/>
+					</convert>
+				</property>
+				<property id="ip" index="6"/>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertSNSPortalLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+	</netype>
+</hitv>

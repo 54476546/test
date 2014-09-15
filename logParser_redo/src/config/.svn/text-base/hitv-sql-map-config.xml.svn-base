@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+    <settings
+            cacheModelsEnabled="true"
+            enhancementEnabled="true"
+            maxSessions="64"
+            maxTransactions="30"
+            maxRequests="128"/>
+    <!--init content programid hitv-->
+    <sqlMap resource="com/hisense/hitv/programcontent/persistence/sqldao/sqlmapdao/TVODProgram.xml"/>
+	<!--subscriber-->
+    <sqlMap resource="com/hisense/hitv/subscriber/persistence/sqlmapdao/sqlmap/Subscriber.xml"/>
+    <sqlMap resource="com/hisense/hitv/subscriber/persistence/sqlmapdao/sqlmap/InternetSubscriber.xml"/>
+ 	
+    <!--system config-->
+    <sqlMap resource="com/hisense/hitv/log/util/persistence/sqldao/sqlmapdao/SystemConfig.xml"/>
+	
+</sqlMapConfig>

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/dev/!svn/ver/51712/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/sqlmapdao
+END
+LogParseNGBSql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/dev/!svn/ver/56389/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/sqlmapdao/LogParseNGBSql.xml
+END
+LogParseSTVSql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/dev/!svn/ver/60737/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/sqlmapdao/LogParseSTVSql.xml
+END
+LogParseExceptionSql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/dev/!svn/ver/53593/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/sqlmapdao/LogParseExceptionSql.xml
+END
+LogParseSTV40Sql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/dev/!svn/ver/58244/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/sqlmapdao/LogParseSTV40Sql.xml
+END
+LogParseSTV42Sql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/dev/!svn/ver/60814/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/sqlmapdao/LogParseSTV42Sql.xml
+END

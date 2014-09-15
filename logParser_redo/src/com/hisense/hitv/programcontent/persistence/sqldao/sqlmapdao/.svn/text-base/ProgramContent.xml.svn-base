@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ProgramContent">
+
+    <typeAlias alias="programContentVO" type="com.hisense.hitv.programcontent.domain.ProgramContentVO"/>
+
+    <resultMap id="ProgramContent-Result" class="programContentVO">
+        <result property="contentId" column="contentId"/>
+        <result property="programId" column="programId"/>
+    </resultMap>
+
+    <select id="getAllVODContent" resultMap="ProgramContent-Result">
+        select contentid, programid
+        from programcontent
+       where PublishStatus != 0
+        order by contentid
+    </select>
+
+    <select id="getVODContentById" resultMap="ProgramContent-Result">
+        select contentid, programid
+        from programcontent
+        where contentId = #contentId#
+    </select>
+</sqlMap>

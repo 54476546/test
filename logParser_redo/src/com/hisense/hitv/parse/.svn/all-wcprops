@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dev/!svn/ver/51418/trunk/code/Parser/LogParser/src/com/hisense/hitv/parse
+END
+AbstractParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/dev/!svn/ver/51418/trunk/code/Parser/LogParser/src/com/hisense/hitv/parse/AbstractParser.java
+END
+IParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/parse/IParser.java
+END
+LogFileParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/dev/!svn/ver/58807/trunk/code/Parser/LogParser/src/com/hisense/hitv/parse/LogFileParser.java
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dev/!svn/ver/50435/trunk/code/Parser/LogParser/config/logModelNGB
+END
+Log_Model_Ps.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/dev/!svn/ver/42197/trunk/code/Parser/LogParser/config/logModelNGB/Log_Model_Ps.xml
+END
+Log_Model_Mdc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/dev/!svn/ver/50338/trunk/code/Parser/LogParser/config/logModelNGB/Log_Model_Mdc.xml
+END
+Log_Model_Termination.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/dev/!svn/ver/50435/trunk/code/Parser/LogParser/config/logModelNGB/Log_Model_Termination.xml
+END
+Log_Model_Epg.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/dev/!svn/ver/42197/trunk/code/Parser/LogParser/config/logModelNGB/Log_Model_Epg.xml
+END
+log_Model.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dev/!svn/ver/50155/trunk/code/Parser/LogParser/config/logModelNGB/log_Model.dtd
+END

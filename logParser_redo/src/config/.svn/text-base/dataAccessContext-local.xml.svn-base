@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <!-- ========================= RESOURCE DEFINITIONS ========================= -->
+
+    <!-- Configurer that replaces ${...} placeholders with values from a properties file -->
+    <!-- (in this case, JDBC-related settings for the dataSource definition below) -->
+    <!--product use-->
+    <bean id="propertyConfigurer" class="com.hisense.hitv.dbcp.HitvPropertyConfigurer">
+        <property name="locations">
+            <!--<value>file:D:/Hitv4.2_test/oss.cfg</value>-->
+            <list>
+            	<value>file:/usr/local/hitv/oss.cfg</value>
+            	<value>file:/usr/logparser/config/sys_conf.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName">
+            <value>oracle.jdbc.driver.OracleDriver</value>
+        </property>
+        <property name="username">
+            <value>pubuser</value>
+        </property>
+        <property name="password">
+            <value>pubuser</value>
+        </property>
+        <property name="initialSize" value="${oracle_initSize}"/>
+        <property name="maxActive" value="${oracle_maxActive}"/>
+        <property name="maxIdle" value="${oracle_maxIdle}"/>
+        <property name="minIdle" value="${oracle_minIdle}"/>
+        <property name="maxWait" value="${oracle_maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${oracle_waitTime}"/>
+        <property name="testWhileIdle" value="${oracle_testWhileIdle}"/>
+        <property name="validationQuery" value="${oracle_validationQuery}"/>
+    </bean>
+
+    <bean id="hitvDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName">
+            <value>oracle.jdbc.driver.OracleDriver</value>
+        </property>
+        <property name="username">
+            <value>hitv</value>
+        </property>
+        <property name="initialSize" value="${oracle_initSize}"/>
+        <property name="maxActive" value="${oracle_maxActive}"/>
+        <property name="maxIdle" value="${oracle_maxIdle}"/>
+        <property name="minIdle" value="${oracle_minIdle}"/>
+        <property name="maxWait" value="${oracle_maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${oracle_waitTime}"/>
+        <property name="testWhileIdle" value="${oracle_testWhileIdle}"/>
+        <property name="validationQuery" value="${oracle_validationQuery}"/>
+    </bean>
+    
+    <bean id="odsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName">
+            <value>oracle.jdbc.driver.OracleDriver</value>
+        </property>
+        <property name="username">
+            <value>${ods_username}</value>
+        </property>
+        <property name="password">
+            <value>${ods_password}</value>
+        </property>
+        <property name="initialSize" value="${oracle_initSize}"/>
+        <property name="maxActive" value="${oracle_maxActive}"/>
+        <property name="maxIdle" value="${oracle_maxIdle}"/>
+        <property name="minIdle" value="${oracle_minIdle}"/>
+        <property name="maxWait" value="${oracle_maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${oracle_waitTime}"/>
+        <property name="testWhileIdle" value="${oracle_testWhileIdle}"/>
+        <property name="validationQuery" value="${oracle_validationQuery}"/>
+    </bean>
+
+    <!--product use end-->
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation">
+            <value>/config/dbuser-sql-map-config.xml</value>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+    </bean>
+
+    <bean id="hitvSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation">
+            <value>/config/hitv-sql-map-config.xml</value>
+        </property>
+        <property name="dataSource">
+            <ref local="hitvDataSource"/>
+        </property>
+    </bean>
+    <bean id="odsSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation">
+            <value>/config/ods-sql-map-config.xml</value>
+        </property>
+        <property name="dataSource">
+            <ref local="odsDataSource"/>
+        </property>
+    </bean>
+
+    <bean id="hitvDBUserSqlDao" class="com.hisense.hitv.dbcp.persistence.sqlmapdao.HitvDBUserSqlDaoImpl">
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+    </bean>
+
+    <bean id="dynamicDataSourcePassword" class="com.hisense.hitv.dbcp.DynamicDataSourcePassword">
+        <property name="hitvDataSource">
+            <ref local="hitvDataSource"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="odsDataSource">
+            <ref local="odsDataSource"/>
+        </property>
+        <property name="hitvDBUserSqlDao">
+            <ref local="hitvDBUserSqlDao"/>
+        </property>
+        <property name="propertyConfigurer">
+            <ref bean="propertyConfigurer"/>
+        </property>
+    </bean>
+
+    <bean id="hitvTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref local="hitvDataSource"/>
+        </property>
+        <property name="nestedTransactionAllowed" value="true" />
+    </bean>
+    
+    <bean id="odsTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref local="odsDataSource"/>
+        </property>
+        <property name="nestedTransactionAllowed" value="true" />
+    </bean>
+
+    <!--hitv user-->
+    <bean id="internetSubscriberSqlMapDao"
+          class="com.hisense.hitv.subscriber.persistence.sqlmapdao.InternetSubscriberDaoImpl">
+        <property name="sqlMapClient">
+            <ref local="hitvSqlMapClient"/>
+        </property>
+    </bean><bean id="subscriberDao" class="com.hisense.hitv.subscriber.persistence.sqlmapdao.SubscriberDaoImpl">
+        <property name="sqlMapClient">
+            <ref local="hitvSqlMapClient" />
+        </property>
+    </bean>
+
+	<bean id="logFileDao" class="com.hisense.hitv.log.logfile.persistence.sqldao.LogFileDaoImpl">
+        <property name="sqlMapClient">
+            <ref local="odsSqlMapClient"/>
+        </property>
+    </bean>
+    
+    <bean id="tvodProgramDao" class="com.hisense.hitv.programcontent.persistence.sqldao.TVODProgramDaoImpl">
+        <property name="sqlMapClient">
+            <ref local="hitvSqlMapClient"/>
+        </property>
+    </bean>
+
+    <bean id="systemConfigSqlDao" class="com.hisense.hitv.log.util.persistence.sqldao.SystemConfigDaoImpl">
+        <property name="sqlMapClient">
+            <ref local="hitvSqlMapClient"/>
+        </property>
+    </bean>
+    <bean id="logParseExceptionDao" class="com.hisense.hitv.log.persistence.LogParseExceptionDaoImpl">
+        <property name="sqlMapClient">
+            <ref local="odsSqlMapClient"/>
+        </property>
+    </bean>
+    <bean id="hitvLogParseSqlDao" class="com.hisense.hitv.log.persistence.LogParseDaoImpl">
+        <property name="sqlMapClient">
+            <ref local="odsSqlMapClient"/>
+        </property>
+        <property name="logParseExceptionDao">
+            <ref local="logParseExceptionDao"/>
+        </property>
+    </bean>
+</beans>

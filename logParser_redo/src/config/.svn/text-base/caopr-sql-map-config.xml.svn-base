@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+    <settings
+            cacheModelsEnabled="true"
+            enhancementEnabled="true"
+            maxSessions="64"
+            maxTransactions="8"
+            maxRequests="128"/>
+    <!--epg view log caopr
+    <sqlMap resource="com/hisense/hitv/log/adaccesslog/persistence/sqldao/sqlmapdao/ADAccessLog.xml"/>
+    <sqlMap resource="com/hisense/hitv/log/uipagelog/persistence/sqldao/sqlmapdao/UIPageLog.xml"/>-->
+
+    <!--init content programid caopr-->
+    <sqlMap resource="com/hisense/hitv/programcontent/persistence/sqldao/sqlmapdao/ProgramContent.xml"/>
+    <sqlMap resource="com/hisense/hitv/programcontent/persistence/sqldao/sqlmapdao/ServiceChannel.xml"/>
+    <sqlMap resource="com/hisense/hitv/programcontent/persistence/sqldao/sqlmapdao/TVODContent.xml"/>
+    <sqlMap resource="com/hisense/hitv/cache/persistence/sqldao/sqlmapdao/ChannelTimeProgram.xml"/>    
+    <sqlMap resource="com/hisense/hitv/log/persistence/sqlmapdao/LogParseSTVSql.xml"/>
+    <sqlMap resource="com/hisense/hitv/log/persistence/sqlmapdao/LogParseNGBSql.xml"/>
+</sqlMapConfig>

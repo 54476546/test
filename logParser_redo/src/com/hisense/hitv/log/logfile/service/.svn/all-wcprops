@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/dev/!svn/ver/49402/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/logfile/service
+END
+LogFileFacadeImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/dev/!svn/ver/53593/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/logfile/service/LogFileFacadeImpl.java
+END
+ILogFileFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/dev/!svn/ver/53593/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/logfile/service/ILogFileFacade.java
+END

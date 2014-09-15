@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/dev/!svn/ver/41170/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/domain
+END
+ProgramContentVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/domain/ProgramContentVO.java
+END
+TVODProgramVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/domain/TVODProgramVO.java
+END
+TVODContentVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/domain/TVODContentVO.java
+END
+ServiceChannelVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/dev/!svn/ver/41170/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/domain/ServiceChannelVO.java
+END

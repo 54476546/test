@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="LogParseSqlSTV">
+<insert id="insertSMTV42GTAppRunLog">
+        INSERT INTO GTAppRunLog (logId, deviceId, appPackage, startTime,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            endTime,
+        </isNotEqual>
+        duration, timeZone, logFileName, dayOfCreated, createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #startTime#,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            #endTime#,
+        </isNotEqual>
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            time2sec(#endTime#) - time2sec(#startTime#),
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            0,
+        </isLessEqual>
+        #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+	<insert id="insertGTAppStartLog">
+        insert into GTAppStartLog(logId, deviceId, appPackage, timeZone,time,
+        startPostion, logFileName, dayOfCreated, createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#,#timeZone#,
+        #time#,#startPostion#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertGTBootNavigationLog">
+        insert into GTBootNavigationLog(logId, deviceId, netType, accountType,
+        searchChannelType, language, sceneMode, postcode, area, tvService, 
+        googleFaultFlag, hitvLogFlag, startTime, endTime, 
+        timeZone, logFileName, dayOfCreated, createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #netType#, #accountType#,
+        #searchChannelType#, #language#, #sceneMode#, #postcode#, #area#, #tvService#, 
+        #googleFaultFlag#, #hitvLogFlag#, #startTime#, #endTime#, 
+        #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertGTSocialTVLog">
+        insert into GTSocialTVLog(logid,deviceid,time,actionType,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #actionType#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertGTFavoriteListLog">
+        insert into GTFavoriteListLog(logid,deviceid,time,favoriteType,
+        listContent,timezone,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #favoriteType#, #listContent#,
+        #timeZone#,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertGestureLog">
+        insert into GestureLog(logid,deviceid,time,gestureType,timezone
+        	,logfilename,dayofcreated,createddate,version,type
+        	<isPropertyAvailable property="secne" prepend=",">
+        	secne
+        	</isPropertyAvailable>
+        	<isPropertyAvailable property="settingItem" prepend=",">
+        	settingItem
+        	</isPropertyAvailable>)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #gestureType#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#
+        	<isPropertyAvailable property="secne" prepend=",">
+        	#secne#
+        	</isPropertyAvailable>
+        	<isPropertyAvailable property="settingItem" prepend=",">
+        	#settingItem#
+        	</isPropertyAvailable>)
+    </insert>
+    <insert id="insertGTInputLog">
+        insert into GTInputLog(logid,deviceid,time,inputName,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #inputName#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertGTCommonActionLog">
+        insert into GTCommonActionLog(logid,deviceid,time,actionType,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #actionType#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertRemoteControlLog">
+        insert into RemoteControlLog(logid,deviceid,time,keyName,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #keyName#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertGTLiveTVLog">
+        insert into GTLiveTVLog(logid,deviceid,time,channelName,
+        	programName,timezone,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #channelName#,
+        	#programName#,#timeZone#,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertAdvertisingLog">
+        insert into AdvertisingLog(logid,subscriberId,postCode,countryCode,adCode,time,adcraft
+        	,adSource,adType,adId,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval,#subscriberId#,#postCode#,#countryCode#,#adCode#,#time#,#adcraft#
+        	,#adSource#,#adType#,#adId#,#logFileName#,#dayOfCreated#,#createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSTV42TerminationSmartUpdateLog">
+        insert into TerminalSmartUpgradeLog(logid,deviceid,time,areaid,timezone,upgradetype,filesize
+        	,startdowntime,enddowntime,isexception,exceptionmsg,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #areaId#, #timeZone#, #upgradeType#, #fileSize#, #startDownTime#
+        	, #endDownTime#, #isException#, #exceptionMsg#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSTV42SDPSSmartUpgradeLog">
+        insert into SDPSSmartUpgradeLog(logid ,subscriberid,requesttime,reponsetime,areaid,ip,currentversion
+        	,nextVersion,isupgrade,upgradetype,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#,  #requestTime#,#reponseTime#, #areaId#, #ip#, #currentVersion#
+        	, #nextVersion#, #isUpgrade#, #upgradeType#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertFaceRecognitionLog">
+        insert into FaceRecognitionLog(logid,deviceid,time,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertVoiceCommandLog">
+        insert into VoiceCommandLog(logid,deviceid,time,commandType,command,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,#time#,#commandType#,#command#,#timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertAdDisplayLog">
+        insert into AdDisplayLog(logid,deviceid,ADCode,time,ThirdAdPlatformCode,ADId,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #ADCode#,(case when sign(instr(#time#,'70')) = 1 then #createdDate# else #time# end) 
+				,#ThirdAdPlatformCode#,#ADId#,#timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertAdClickLog">
+        insert into AdClickLog(logid,deviceid,ADCode,time,ThirdAdPlatformCode,ADId,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #ADCode#,(case when sign(instr(#time#,'70')) = 1 then #createdDate# else #time# end)
+        ,#ThirdAdPlatformCode#,#ADId#,#timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertAdPlayLog">
+        insert into AdPlayLog(logid,deviceid,ADCode,time,duration,ThirdAdPlatformCode,ADPlayPercent,ADId,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #ADCode#,(case when sign(instr(#time#,'70')) = 1 then #createdDate# else #time# end),#duration#,#ThirdAdPlatformCode#,#ADPlayPercent#,#ADId#,#timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+</sqlMap>

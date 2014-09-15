@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ProgramContent">
+
+    <typeAlias alias="serviceChannelVO" type="com.hisense.hitv.programcontent.domain.ServiceChannelVO"/>
+
+    <resultMap id="ServiceChannel-Result" class="serviceChannelVO">
+        <result property="serviceId" column="serviceid"/>
+        <result property="channelId" column="channelid"/>
+    </resultMap>
+
+    <select id="getAllServiceChannel" resultMap="ServiceChannel-Result">
+        select serviceid, channelid
+        from channel
+       where serviceid is not null
+        order by channelid
+    </select>
+
+    <select id="getServiceChannelById" resultMap="ServiceChannel-Result">
+        select serviceid, channelid
+        from channel
+        where serviceid = #serviceId#
+    </select>
+</sqlMap>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+    <settings
+            cacheModelsEnabled="true"
+            enhancementEnabled="true"
+            maxSessions="64"
+            maxTransactions="30"
+            maxRequests="128"/>
+    <!--init content programid hitv-->
+    <sqlMap resource="com/hisense/hitv/programcontent/persistence/sqldao/sqlmapdao/TVODProgram.xml"/>
+	<!--subscriber-->
+    <sqlMap resource="com/hisense/hitv/subscriber/persistence/sqlmapdao/sqlmap/Subscriber.xml"/>
+    <sqlMap resource="com/hisense/hitv/subscriber/persistence/sqlmapdao/sqlmap/InternetSubscriber.xml"/>
+ 	
+ 	<!--log file -->
+	<sqlMap resource="com/hisense/hitv/log/logfile/persistence/sqldao/sqlmapdao/LogFile.xml"/>
+    <!--system config-->
+    <sqlMap resource="com/hisense/hitv/log/util/persistence/sqldao/sqlmapdao/SystemConfig.xml"/>
+	<!-- log xml -->
+    <sqlMap resource="com/hisense/hitv/log/persistence/sqlmapdao/LogParseSTVSql.xml"/>
+    <sqlMap resource="com/hisense/hitv/log/persistence/sqlmapdao/LogParseSTV40Sql.xml"/>
+    <sqlMap resource="com/hisense/hitv/log/persistence/sqlmapdao/LogParseNGBSql.xml"/>
+    <sqlMap resource="com/hisense/hitv/log/persistence/sqlmapdao/LogParseSTV42Sql.xml"/>
+       
+</sqlMapConfig>

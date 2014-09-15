@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hitv SYSTEM "log_Model.dtd">
+<hitv>
+	<netype id="ps" logfiletype="12">
+		<key>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</key>
+		<global>
+			<property id="logFileName" defualt="logfilename"/>
+			<property id="createdDate" defualt="today"/>
+		</global>
+		<!-- <log id="vod" version="1.1" type="0,4,12,13"> -->
+		<log id="STBStatus">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="viewLogId"/>
+				<property id="subscriberId" index="3"/>
+				<property id="changeDate" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="isValid" defualt="1"/>
+				<property id="status" index="5" maxlen="1"/>
+				<property id="stbIp" index="6"/>
+				<property id="deviceId" index="7"/>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="changeDate"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertSTBStatusLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+	</netype>
+</hitv>

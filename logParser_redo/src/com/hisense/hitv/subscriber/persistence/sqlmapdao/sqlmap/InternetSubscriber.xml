@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="InternetSubscriber">
+
+    <typeAlias alias="internetSubscriberVO" type="com.hisense.hitv.subscriber.domain.InternetSubscriberVO"/>
+
+    <resultMap id="Subscirber-Result-List" class="internetSubscriberVO">
+        <result property="subscriberId" column="subscriberId"/>
+        <result property="deviceCode" column="deviceCode"/>
+    </resultMap>
+
+    <select id="getInternetSubscribers" resultMap="Subscirber-Result-List">
+        select ins.subscriberid, ins.devicecode
+        from subscriber s, internetsubscriber ins
+        where s.subscriberid = ins.subscriberid
+        and s.status != 0
+        and s.status != 9
+    </select>
+
+    <select id="getInternetSubscriberById" resultMap="Subscirber-Result-List">
+        select ins.subscriberid, ins.devicecode
+        from subscriber s, internetsubscriber ins
+        where s.subscriberid = ins.subscriberid
+        and s.status != 0
+        and s.status != 9
+        and s.subscriberId = #subscriberId#
+    </select>
+</sqlMap>

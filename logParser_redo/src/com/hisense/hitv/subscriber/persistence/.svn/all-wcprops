@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/subscriber/persistence
+END
+ISubscriberDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/subscriber/persistence/ISubscriberDao.java
+END
+IInternetSubscriberDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/subscriber/persistence/IInternetSubscriberDao.java
+END

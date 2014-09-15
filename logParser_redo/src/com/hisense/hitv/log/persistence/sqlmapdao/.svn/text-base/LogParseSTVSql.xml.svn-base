@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="LogParseSqlSTV">
+
+    <typeAlias alias="dbPropertyMap" type="java.util.Hashtable"/>
+    
+    <!-- ==============stv start=================== -->
+    <insert id="insertSMTVSTVAppDownLog">
+        insert into stvappdownlog(logId, subscriberid, applicationId, time, timeZone,
+        logFileName, dayOfWeek, createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #time#, #timeZone#,
+        #logFileName#, #dayOfWeek#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSMTVSTV50AppDownLog">
+        insert into stvappdownlog(logId, subscriberId,applicationId, time,ip,
+        fileType,logFileName, dayOfWeek, createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #time#,#ip#,#fileType#,
+        #logFileName#, #dayOfWeek#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSMTVSTVAppRunLog">
+        INSERT INTO stvapprunlog (logId, subscriberid, applicationId, startTime,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            endTime,
+        </isNotEqual>
+        duration,timeZone, logFileName, dayOfWeek, createddate,version,type
+        <isEqual property="version" compareValue="1.3f">
+        	,ip
+        </isEqual>)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #startTime#,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            #endTime#,
+        </isNotEqual>
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            	time2sec(#endTime#) - time2sec(#startTime#),
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            0 ,
+        </isLessEqual>
+        #timeZone#, #logFileName#, #dayOfWeek#, #createdDate#,#version#,#type#
+        <isEqual property="version" compareValue="1.3f">
+        	,#ip#
+        </isEqual>)
+    </insert>
+    
+    <insert id="insertSTVChannelLog">
+        insert into stvchannellog(viewlogid, subscriberid, mac, channelname, status, viewtime, isvalid, createddate,
+        logfilename,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #mac#, #channelName#, #status#, #viewTime#, #valid#, #createdDate#, 
+        #logFileName#,#version#,#type#)
+    </insert>
+    
+    <insert id="insertSTVServiceViewLog">
+        insert into stvserviceviewlog(viewlogid, subscriberid, mac, viewtime, servicename, url, dayofcreated,
+        createddate, logfilename,version,type
+        <isNotEqual compareValue="1.0f" property="version">
+            ,ip
+        </isNotEqual>
+        )
+        values(seq_viewlogid.nextval, #subscriberId#, #mac#, #viewTime#, #serviceName#, #url#, #dayOfCreated#,
+        #createdDate#, #logFileName#,#version#,#type#
+        <isNotEqual compareValue="1.0f" property="version">
+            , #ip#
+        </isNotEqual>
+        )
+    </insert>
+    
+    <insert id="mergeLiveChannelLog">
+        INSERT INTO livechannelviewlog (VIEWLOGID, subscriberid, channelid, startTime,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            endtime,
+        </isNotEqual>
+        duration, logFileName, dayOfCreated, createddate,ip,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #channelId#, #startTime#,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            #endTime#,
+        </isNotEqual>
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            	time2sec(#endTime#) - time2sec(#startTime#),
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            0 ,
+        </isLessEqual>
+        #logFileName#, #dayOfCreated#, #createdDate#, #ip#,#version#,#type#)
+    </insert>
+    
+    <insert id="insertStvEpgBrowserLog">
+        insert into EPGBrowserLog(LogID ,SubscriberID ,StartTime ,Action ,PageUrl ,IP  
+        	,LogFileName ,DayOfCreated ,CreatedDate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId# ,#time# ,#action# ,#pageUrl# ,#ip#
+        	,#logFileName# ,#dayOfCreated# ,#createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSearchViewLogLog">
+        insert into SEARCHVIEWLOG(LogID ,SubscriberID ,SearchTime ,SearchKey ,SearchType ,IP  
+        	,LogFileName ,DayOfCreated ,CreatedDate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId# ,#time# ,#keyword# ,#searchmode# ,#ip#
+        	,#logFileName# ,#dayOfCreated# ,#createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insert50SearchViewLogLog">
+        insert into SEARCHVIEWLOG(LogID ,SubscriberID ,SearchTime ,SearchKey ,SearchType ,IP  
+        	,LogFileName ,DayOfCreated ,CreatedDate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId# ,#time# ,#searchKey# ,#searchType# ,#ip#
+        	,#logFileName# ,#dayOfCreated# ,#createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertHMMResourceSelectLog">
+        insert into HMMResourceSelectLog(LogID, DeviceId, Time, Mediatype, ResourceType, ResourceProvider,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type, loginName)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #mediatype#, #resourceType#, #resourceProvider#,
+         	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#, #loginName#)
+    </insert>
+    <insert id="insertLauncherRecommendBrowserLog">
+        insert into LauncherRecommendBrowserLog(LogID, DeviceId, Time, Navigation, Objecttype,
+        	ObjectId, TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #navigation#, #objecttype#, 
+        	#objectId#, #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCAChangeChannelLog">
+        insert into HTVCAChangeChannelLog(LogID, DeviceId, Time, Input, TimeZone, 
+        	LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #input#, #timeZone#,
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCABookProgramLog">
+        insert into HTVCABookProgramLog(LogID, DeviceId, Time, Action, Input, TimeZone, 
+        	LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #action#, #input#, #timeZone#,
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCABrowserProgramCategoryLog">
+        insert into HTVCABrowserProgramCategoryLog(LogID, DeviceId, Time, CategoryID, Input, 
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #categoryID#, #input#, #timeZone#,
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCABrowserProgramDetailLog">
+        insert into HTVCABrowserProgramDetailLog(LogID, DeviceId, Time, Input, TimeZone, 
+        	LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #input#, #timeZone#,
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCAMiniEpgStartLog">
+        insert into HTVCAMiniEpgStartLog(LogID, DeviceId, Time, Input, TimeZone, 
+        	<isPropertyAvailable property="signalSource">
+        		signalSource,
+        	</isPropertyAvailable>
+        	LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #input#, #timeZone#,
+        	<isPropertyAvailable property="signalSource">
+        		#signalSource#,
+        	</isPropertyAvailable>
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCAFullEpgStartLog">
+        insert into HTVCAFullEpgStartLog(LogID, DeviceId, Time, Input, TimeZone, 
+        	LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #input#, #timeZone#,
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCAProgramdetailActionLog">
+        insert into HTVCAProgramdetailActionLog(LogID, DeviceId, Time, Action, TimeZone, 
+        	LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #action#, #timeZone#,
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCABookProgramViewLog">
+        insert into HTVCABookProgramViewLog(LogID, DeviceId, Time, Action, TimeZone, 
+        	LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #action#, #timeZone#,
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertTVOperationParametersLog">
+        insert into TVOperationParametersLog(LogID, DeviceId, Time, FlashRemainingSize,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #flashRemainingSize#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertTVSoftwareParametersLog">
+        insert into TVSoftwareParametersLog(LogID, DeviceId, Time, TVVersionInfo,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #TVVersionInfo#,
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertAPPShowLog">
+        insert into APPShowLog (logId, deviceId, appPackage, startTime, appVersion,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            endTime,
+        </isNotEqual>
+        timeZone, logFileName, DayOfCreated, createddate, version, type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #startTime#, #appVersion#,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            #endTime#,
+        </isNotEqual>
+        #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHMMDisplayModeLog">
+        insert into HMMDisplayModeLog(LogID, DeviceId, Time, mediatype, displayMode, 
+        	loginName, TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #mediatype#, #displayMode#, #loginName#,
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHMMMediaPlayLog">
+        insert into HMMMediaPlayLog(LogID, DeviceId, Time, mediatype, mediaTime, resourceType,
+        	loginName, TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #mediatype#, #mediaTime#, #resourceType#,#loginName#,
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertLauncherHMMRecommendClickLog">
+        insert into LauncherHMMRecommendClickLog(LogID, DeviceId, Time, mediatype, 
+        	position, TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #mediatype#, #position#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVNCAppStartLog">
+        insert into HTVNCAppStartLog(LogID, DeviceId, Time, appPackage,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #appPackage#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHSSAStartLog">
+        insert into HSSAStartLog(LogID, DeviceId, Time, startScene,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #startScene#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVSETStartLog">
+        insert into HTVSETStartLog(LogID, DeviceId, Time, settingCategory, settingItem,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #settingCategory#, #settingItem#,
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVSETItemResultLog">
+        insert into HTVSETItemResultLog(LogID, DeviceId, Time, settingItem, itemValue,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #settingItem#, #itemValue#,
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVAFeatureControlLog">
+        insert into HTVAFeatureControlLog(LogID, DeviceId, Time, feature, actionType,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #feature#, #actionType#,
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVAMediaPlayLog">
+        insert into HTVAMediaPlayLog(LogID, DeviceId, Time, mediatype, mediaName,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #mediatype#, #mediaName#,
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertAPPUPGRADELog">
+        insert into APPUPGRADELog(LogID, DeviceId, Time, appPackage, currentVersion, nextVersion,
+        	isValid, TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #appPackage#, #currentVersion#, #nextVersion#,
+        	#isValid#, #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCVideoPlayLog">
+        insert into HTVCVideoPlayLog(LogID, DeviceId, Time, videoName,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #videoName#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCUsingLog">
+        insert into HTVCUsingLog(LogID, DeviceId, Time, actionType,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #actionType#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVVoiceStartLog">
+        insert into HTVVoiceStartLog(LogID, DeviceId, Time, startType,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #startType#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertSNSPortalLog">
+        insert into SNSPortalLog(LogID ,SubscriberID ,Time ,Action ,PageUrl ,IP  
+        	,LogFileName ,DayOfCreated ,CreatedDate, version, type)
+        values(seq_viewlogid.nextval, #subscriberId# ,#time# ,#action# ,#pageUrl# ,#ip#
+        	,#logFileName# ,#dayOfCreated# ,#createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertHTVVProgramHistoryLog">
+        insert into HTVVProgramHistoryLog(LogID, DeviceId, Time, PlayerPackage, PlayKey, ProgramType, ProgramName, 
+        	ProgramDuration, EpisodeIndex, TimeZone, LogFileName, DayOfCreated, CreatedDate, version, type)
+        values(seq_viewlogid.nextval, #deviceId# ,#time# ,#playerPackage# ,#playKey# ,#programType#, #programName#,
+        	#programDuration#, #episodeIndex#, #timeZone#, #logFileName# ,#dayOfCreated# ,#createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertMediaBrowserLog">
+        INSERT INTO MediaBrowserLog (logId, deviceId, startTime
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            ,endTime
+        </isNotEqual>
+        ,objectType,objectName,timeZone, logFileName,dayOfCreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #startTime#
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            ,#endTime#
+        </isNotEqual>
+        ,#objectType#,#objectName#,#timeZone#, #logFileName#,#dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertTVUseTimeLog">
+        insert into TVUseTimeLog(LogID, DeviceId, UseTime, ShutDownTime,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #useTime#, #shutDownTime#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertEDUPortalRecommendBrowserLog">
+        insert into EDUPortalRecommendBrowserLog(LogID, DeviceId, Time, LoginName,
+        	Navigation, ObjectType, ObjectId, ContentType, ContentTitle,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #loginName#, #navigation#, 
+        	#objectType#, #objectId#, #contentType#, #contentTitle#, #timeZone#, 
+        	#logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertEDUPortalContentClickLog">
+        insert into EDUPortalContentClickLog(LogID, DeviceId, Time, LoginName, ContentType, 
+        	ContentPosition, ContentTitle, PartnerName, ProductSynopsis, StartUpType,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #loginName#, #contentType#, 
+        	#contentPosition#, #contentTitle#, #partnerName#, #productSynopsis#, #startUpType#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCALiveChannelAccessWayLog">
+        insert into HTVCALiveChannelAccessWayLog(LogID, DeviceId, Time, AccessWay, CAVersion,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #accessWay#, #caVersion#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertHTVCASTBMatchingResultLog">
+        insert into HTVCASTBMatchingResultLog(LogID, DeviceId, Time, MatchingResult, InfraredCodeList,
+        	CAVersion,TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #matchingResult#, #infraredCodeList#, #caVersion#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertEPGHTVCABookProgramLog">
+        insert into EPGHTVCABookProgramLog(LogID, DeviceId, SubscriberID, Time, ChannelSId, ChannelName, 
+        	ProgramName, ProgramBroadcastTime, Action, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #subscriberId#, #time#, #channelSId#, #channelName#, 
+        	#programName#, #programBroadcastTime#, #action#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertSNSWordsLog">
+        insert into SNSWordsLog(LogID, SubscriberID, Time, CustomerId, FilterType, 
+        	Words, NECode, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #subscriberId#, #time#, #customerId#, #filterType#, 
+        	#words#, #neCode#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertMessagePushLog">
+        insert into MessagePushLog(LogID, SubscriberID, Time, MessageId, 
+        	MessageType, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #subscriberId#, #time#, #messageId#, 
+        	#messageType#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertGTTVUseTimeLog">
+        insert into GTTVUseTimeLog(LogID, DeviceId, UseTime, ShutDownTime,
+        	TimeZone, LogFileName, DayOfCreated, CreatedDate, Version, Type)
+        values(seq_viewlogid.nextval, #deviceId#, #useTime#, #shutDownTime#, 
+        	#timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <insert id="insertGTSmartUpgradeLog">
+        insert into GTSmartUpgradeLog(logid,deviceid,downloadResult,timezone,upgradetype,filesize,areaId
+        	,startdowntime,enddowntime,isexception,exceptionmsg,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #downloadResult#, #timeZone#, #upgradeType#, #fileSize#, #areaId#,
+        	#startDownTime#,#endDownTime#, #isException#, #exceptionMsg#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertGTAPPShowLog">
+        insert into GTAPPShowLog (logId, deviceId, appPackage, startTime,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            endTime,
+        </isNotEqual>
+        timeZone, logFileName, DayOfCreated, createddate, version, type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #startTime#,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            #endTime#,
+        </isNotEqual>
+        #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#, #version#, #type#)
+    </insert>
+    <!-- ==============stv end=================== -->
+</sqlMap>

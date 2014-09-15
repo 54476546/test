@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/compress
+END
+ICompressLogFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/com/hisense/hitv/compress/ICompressLogFile.java
+END
+GZIPCompressImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/dev/!svn/ver/53666/trunk/code/Parser/LogParser/src/com/hisense/hitv/compress/GZIPCompressImpl.java
+END
+UnCompressGZip.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/compress/UnCompressGZip.java
+END

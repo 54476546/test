@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hitv SYSTEM "log_Model.dtd">
+<hitv>
+	<netype id="gttermination" logfiletype="20">
+		<key>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</key>
+		<global>
+			<property id="logFileName" defualt="logfilename"/>
+			<property id="createdDate" defualt="today"/>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</global>
+		<log id="GTAPPStart">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="111" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId" />
+				<property id="deviceId" index="2" />
+				<property id="time" index="3">
+					<convert>
+						<format type="date" />
+					</convert>
+				</property>
+				<property id="appPackage" index="4">
+					<convert>
+						<format type="length" ref="128" />
+					</convert>
+				</property>
+				<property id="startPostion" index="5" />
+				<property id="timeZone" index="6">
+					<convert>
+						<format type="signum" />
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate" />
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTAppStartLog" namespace="hitv" />
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTAPPRun">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="101" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="appPackage" index="5"/>
+				<property id="startTime" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTimeBase0" defualt="0">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="6">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertSMTV42GTAppRunLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTBootNavigation">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="102" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="netType" index="3" nullEnable="true"/>
+				<property id="accountType" index="4" nullEnable="true"/>
+				<property id="searchChannelType" index="5" nullEnable="true"/>
+				<property id="language" index="6" nullEnable="true"/>
+				<property id="sceneMode" index="7" nullEnable="true"/>
+				<property id="postcode" index="8" nullEnable="true"/>
+				<property id="area" index="9" nullEnable="true">
+				<convert>
+						<format type="length" ref="32"/>
+					</convert>
+				</property>
+				<property id="tvService" index="10" nullEnable="true"/>
+				<property id="googleFaultFlag" index="11" nullEnable="true"/>
+				<property id="hitvLogFlag" index="12" nullEnable="true"/>
+				<property id="startTime" index="13">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="14">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="15">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTBootNavigationLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTSocialTV">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="103" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="actionType" index="4"/>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="deviceId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTSocialTVLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTFavoriteList">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="104" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="favoriteType" index="4"/>
+				<property id="listContent" index="5">
+					<convert>
+						<format type="length" ref="2048"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="6">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="deviceId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTFavoriteListLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTInput">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="106" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="inputName" index="4"/>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="deviceId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTInputLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTCommonAction">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="107" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="actionType" index="4"/>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="deviceId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTCommonActionLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTLiveTV">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="110" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="channelName" index="4">
+					<convert>
+						<format type="length" ref="128"/>
+					</convert>
+				</property>
+				<property id="programName" index="5">
+					<convert>
+						<format type="length" ref="128"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="6">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="deviceId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTLiveTVLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTAPPShow">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="128" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="startTime" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="appPackage" index="5"/>
+				<property id="endTimeBase0" defualt="0">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="6">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTAPPShowLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTSmartUpgrade">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="119" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="areaId" index="3" nullEnable="true"/>
+				<property id="upgradeType" index="4"/>
+				<property id="fileSize" index="5"/>
+				<property id="startDownTime" index="6">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endDownTime" index="7">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="downloadResult" index="8"/>
+				<property id="isException" index="9"/>
+				<property id="exceptionMsg" index="10" nullEnable="true"/>
+				<property id="timeZone" index="11">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTSmartUpgradeLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="GTTVUseTime">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="112" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="deviceId" index="2"/>
+				<property id="useTime" index="3"/>
+				<property id="shutDownTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfCreated">
+					<convert>
+						<format type="day" ref="createdDate"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertGTTVUseTimeLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+	</netype>
+</hitv>

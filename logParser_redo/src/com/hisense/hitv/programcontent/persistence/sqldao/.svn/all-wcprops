@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/persistence/sqldao
+END
+ProgramContentDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/persistence/sqldao/ProgramContentDaoImpl.java
+END
+TVODProgramDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/persistence/sqldao/TVODProgramDaoImpl.java
+END
+ServiceChannelImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/persistence/sqldao/ServiceChannelImpl.java
+END
+TVODContentDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/dev/!svn/ver/41641/trunk/code/Parser/LogParser/src/com/hisense/hitv/programcontent/persistence/sqldao/TVODContentDaoImpl.java
+END

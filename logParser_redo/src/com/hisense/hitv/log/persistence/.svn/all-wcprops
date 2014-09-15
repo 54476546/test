@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/dev/!svn/ver/51712/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence
+END
+LogParseExceptionDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/LogParseExceptionDaoImpl.java
+END
+LogParseDaoImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/LogParseDaoImpl.java
+END
+ILogParseExceptionDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/ILogParseExceptionDao.java
+END
+ILogParseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/dev/!svn/ver/50241/trunk/code/Parser/LogParser/src/com/hisense/hitv/log/persistence/ILogParseDao.java
+END

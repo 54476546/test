@@ -1,0 +1,124 @@
+package com.hisense.hitv.subscriber.domain;
+
+/**
+ * Subscriber记录对象
+ * @author zhoudi
+ * @version 1.0
+ */
+public class SubscriberVO {
+    private long subscriberId;
+    private String deviceId;
+    private long administrator;
+    private long partnerId;
+    private String mac;
+    private Integer startRownum;
+    private Integer endRownum;
+
+    /**
+     * construct function
+     */
+    public SubscriberVO() {
+        this.subscriberId = -1;
+        this.deviceId = "";
+        this.administrator = 0;
+        this.mac = "";
+    }
+
+    /**
+     * @return the subscriberId
+     */
+    public long getSubscriberId() {
+        return subscriberId;
+    }
+
+    /**
+     * @param subscriberId the subscriberId to set
+     */
+    public void setSubscriberId(long subscriberId) {
+        this.subscriberId = subscriberId;
+    }
+
+    /**
+     * @return the deviceId
+     */
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    /**
+     * @param deviceId the deviceId to set
+     */
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    /**
+     * @return the administrator
+     */
+    public long getAdministrator() {
+        return administrator;
+    }
+
+    /**
+     * @param administrator the administrator to set
+     */
+    public void setAdministrator(long administrator) {
+        this.administrator = administrator;
+    }
+
+    /**
+     * @return the partnerId
+     */
+    public long getPartnerId() {
+        return partnerId;
+    }
+
+    /**
+     * @param partnerId the partnerId to set
+     */
+    public void setPartnerId(long partnerId) {
+        this.partnerId = partnerId;
+    }
+
+    /**
+     * @return the mac
+     */
+    public String getMac() {
+        return mac;
+    }
+
+    /**
+     * @param mac the mac to set
+     */
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    /**
+     * @param startRownum the startRownum to set
+     */
+    public void setStartRownum(Integer startRownum) {
+        this.startRownum = startRownum;
+    }
+
+    /**
+     * @return the startRownum
+     */
+    public Integer getStartRownum() {
+        return startRownum;
+    }
+
+    /**
+     * @param endRownum the endRownum to set
+     */
+    public void setEndRownum(Integer endRownum) {
+        this.endRownum = endRownum;
+    }
+
+    /**
+     * @return the endRownum
+     */
+    public Integer getEndRownum() {
+        return endRownum;
+    }
+}

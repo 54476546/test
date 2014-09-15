@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Subscriber">
+
+    <typeAlias alias="SubscriberVO" type="com.hisense.hitv.subscriber.domain.SubscriberVO"/>
+
+    <resultMap id="Subscirber-Result-List" class="SubscriberVO">
+        <result property="subscriberId" column="subscriberId"/>
+        <result property="deviceId" column="deviceId"/>
+        <result property="mac" column="mac" nullValue=""/>
+        <result property="administrator" column="administrator"/>
+        <result property="partnerId" column="partnerId"/>
+    </resultMap>
+
+    <select id="getSubscribers" resultMap="Subscirber-Result-List" >
+        <![CDATA[
+        select b.*
+		  from (select a.*, rownum as linenum
+		          from (select subscriberid, deviceid, mac, administrator, partnerid
+		          		  from subscriber 
+		          		 where status != '0'
+        				   and status != '9') a
+		         where rownum <= #endRownum#) b
+		 where linenum >= #startRownum#
+		 ]]>
+    </select>
+
+    <select id="getSubscriberById" resultMap="Subscirber-Result-List">
+        select subscriberid, deviceid, mac, administrator, partnerid
+        from subscriber
+        where status != '0'
+        and status != '9'
+        and subscriberId = #subscriberId#
+    </select>
+
+    <select id="getSubscriberByMac" resultMap="Subscirber-Result-List">
+        select subscriberid, deviceid, mac, administrator, partnerid
+        from subscriber
+        where status != '0'
+        and status != '9'
+        and SubscriberType = '4'
+        and mac = #mac#
+    </select>
+    
+    <select id="getSubscriberCount" resultClass="java.lang.Integer">
+        select count(subscriberid)
+        from subscriber
+        where status != '0'
+        and status != '9'
+    </select>
+</sqlMap>

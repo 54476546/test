@@ -1,0 +1,134 @@
+package com.hisense.hitv.service;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Properties;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.MDC;
+import org.apache.log4j.PropertyConfigurator;
+import org.springframework.beans.BeansException;
+
+import com.hisense.hitv.parse.AbstractParser;
+import com.hisense.hitv.parse.IParser;
+import com.hisense.hitv.resource.domain.LogXmlNetypeVO;
+import com.hisense.hitv.resource.persistence.LogXmlParseDao;
+import com.hisense.hitv.util.LogFileConfig;
+import com.hisense.hitv.util.NmsUtil;
+import com.hisense.hitv.util.SpringUtil;
+
+/**
+ * LogParser网元Main函数类，启动各类型日志解析Parser。
+ * @author zhoudi
+ * @version 1.0
+ */
+public class LogParserService {
+
+    /**
+     * 日志类型NGB4.0
+     */
+    public static final int LGTYPE_NGB40 = 4;
+    /**
+     * 日志类型NGB3.0
+     */
+    public static final int LGTYPE_NGB30 = 5;
+    /**
+     * 日志类型ADM
+     */
+    public static final int LGTYPE_ADM = 2;
+    /**
+     * 日志类型STV
+     */
+    public static final int LGTYPE_STV = 3;
+    private static Log LOG = LogFactory.getLog(AbstractParser.class);
+
+    private static String sys_os = System.getProperty("os.name");
+    private static int curLGType;
+
+    /**
+     * constructor
+     */
+    private LogParserService() {
+
+    }
+
+    /**
+     * 返回当前日志类型
+     * @return curLGType 日志类型
+     */
+    public static int getCurLGType() {
+        return curLGType;
+    }
+
+    /**
+     * 日志解析Main方法，启动具体的日志解析处理。
+     * @param args 网元类型
+     */
+    public static void main(String[] args) {
+        MDC.put("NECode", "logparser");
+
+        InputStream stream = null;
+        if (args.length == 0) {
+            System.out.println("Please Input the LogParser Type");
+
+            return;
+        }
+
+        int type = Integer.parseInt(args[0]);
+        LogParserService.curLGType = type;
+        try {
+            if (sys_os.toLowerCase().indexOf("windows") != -1) {
+                stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("log4j.properties");
+            } else {
+                String log4jPath = "/usr/logparser/config/log4j.properties";
+                stream = new FileInputStream(log4jPath);
+            }
+
+            Properties properties = new Properties();
+            properties.load(stream);
+            PropertyConfigurator.configure(properties);
+
+            LOG.info("===========system config xml file add end");
+
+            LogFileConfig logFile = (LogFileConfig) SpringUtil.getBean("logFileConfig");
+            // // 获得配置文件全部参数
+            NmsUtil nmsUtil = new NmsUtil(logFile);
+            nmsUtil.starNms();
+            
+            // 加载日志配置文件
+            LogXmlParseDao logXmlParseDao = (LogXmlParseDao) SpringUtil.getBean("logXmlParseDao");
+            LOG.info("==============Log file module xml file add  start!");
+            if (logXmlParseDao.load()) {
+                ArrayList<LogXmlNetypeVO> netypeList = logXmlParseDao.getNetypeList();
+                if (null != netypeList) {
+                    // 为每个网元创建独立解析线程
+                    for (LogXmlNetypeVO netypeVO : netypeList) {
+                        IParser parseLogFile = (IParser) SpringUtil.getBean("parseLogFile");
+                        parseLogFile.setNetype(netypeVO);
+                        new Thread(parseLogFile).start();
+                        LOG.info("==========" + netypeVO.getNeTypeId() + " netype thread start");
+                    }
+                }
+            }
+            LOG.info("========Log file module xml file add  end");
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (BeansException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (stream != null) {
+                    stream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

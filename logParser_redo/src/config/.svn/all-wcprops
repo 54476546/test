@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dev/!svn/ver/51712/trunk/code/Parser/LogParser/src/config
+END
+ods-sql-map-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/config/ods-sql-map-config.xml
+END
+hitv-sql-map-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/config/hitv-sql-map-config.xml
+END
+applicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/dev/!svn/ver/53609/trunk/code/Parser/LogParser/src/config/applicationContext.xml
+END
+dataAccessContext-local.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/dev/!svn/ver/53609/trunk/code/Parser/LogParser/src/config/dataAccessContext-local.xml
+END
+caopr-sql-map-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/dev/!svn/ver/42197/trunk/code/Parser/LogParser/src/config/caopr-sql-map-config.xml
+END
+dbuser-sql-map-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/dev/!svn/ver/15417/trunk/code/Parser/LogParser/src/config/dbuser-sql-map-config.xml
+END

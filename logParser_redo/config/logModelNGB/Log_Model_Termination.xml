@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hitv SYSTEM "log_Model.dtd">
+<hitv>
+	<netype id="termination" logfiletype="13">
+		<key>
+			<property id="version" index="0"/>
+			<property id="type" index="1"/>
+		</key>
+		<global>
+			<property id="logFileName" defualt="logfilename"/>
+			<property id="createdDate" defualt="today"/>
+		</global>
+		<!-- <log id="vod" version="1.1" type="0,4,12,13"> -->
+		<log id="channel">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="viewLogId"/>
+				<property id="channelVersion" index="0"/>
+				<property id="subscriberId" index="2"/>
+				<property id="channelId" index="3"/>
+				<property id="startTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="5">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="stbIp" index="6"/>
+				<property id="deviceId">
+					<convert>
+						<cache prefix="subdev" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfMonth">
+					<convert>
+						<format type="month" ref="startTime"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="startTime"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertChannelViewLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="channel">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.3" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="viewLogId"/>
+				<property id="channelVersion" index="0"/>
+				<property id="subscriberId" index="2"/>
+				<property id="channelId" index="3"/>
+				<property id="startTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="5">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="stbIp" index="6"/>
+				<property id="timeZone" index="7">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="deviceId">
+					<convert>
+						<cache prefix="subdev" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfMonth">
+					<convert>
+						<format type="month" ref="startTime"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="startTime"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertChannelViewLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="LiveChannel">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.4" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="1" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="viewLogId"/>
+				<property id="channelVersion" index="0"/>
+				<property id="subscriberId" index="2"/>
+				<property id="serviceId" index="3"/>
+				<property id="channelId">
+					<convert>
+						<cache prefix="sercha" ref="serviceId"/>
+					</convert>
+				</property>
+				<property id="startTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="5">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="stbIp" index="6"/>
+				<property id="timeZone" index="7">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="deviceId">
+					<convert>
+						<cache prefix="subdev" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfMonth">
+					<convert>
+						<format type="month" ref="startTime"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="startTime"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertChannelViewLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="VitualChannel">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.4" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="2" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="viewLogId"/>
+				<property id="channelVersion" index="0"/>
+				<property id="subscriberId" index="2"/>
+				<property id="channelId" index="3"/>
+				<property id="startTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="5">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="stbIp" index="6"/>
+				<property id="timeZone" index="7">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="deviceId">
+					<convert>
+						<cache prefix="subdev" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfMonth">
+					<convert>
+						<format type="month" ref="startTime"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="startTime"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertChannelViewLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="AppRun">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="3" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="applicationId" index="5"/>
+				<property id="startTime" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTimeBase0" defualt="0">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="6">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="mac">
+					<convert>
+						<cache prefix="submac" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="startTime"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="mergeSTVAppRunLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="AppDown">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="4" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="applicationId" index="4"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="mac">
+					<convert>
+						<cache prefix="submac" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="time"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertSTVAppDownLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="AppBrowser">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="5" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="applicationId" index="4"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="7">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="original" index="5"/>
+				<property id="categoryId" index="6">
+					<convert>
+						<format type="defualt2null" ref="0"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="time"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertAppBrowserLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="AppInstall">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="6" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="applicationId" index="4"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="mac">
+					<convert>
+						<cache prefix="submac" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="time"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertAppInstallLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="AppUnInstall">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="7" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="applicationId" index="4"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="mac">
+					<convert>
+						<cache prefix="submac" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="time"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertAppUnInstallLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="AppStore">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="8" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="startTime" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="endTime" index="4">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="timeZone" index="5">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="startTime"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="startTime"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertAppStoreViewedLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="VersionUpgrade">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="9" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="upgradeTime" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="oldVersion" index="4"/>
+				<property id="newVersion" index="5"/>
+				<property id="stbIp" index="6"/>
+				<property id="isException" index="7"/>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="upgradeTime"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="upgradeTime"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertVersionUpgradeLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="VideoBrowser">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.2" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="10" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="time" index="3">
+					<convert>
+						<format type="date"/>
+					</convert>
+				</property>
+				<property id="programType" index="5"/>
+				<property id="contentId" index="4"/>
+				<property id="programId">
+					<convert>
+						<cache prefix="vod" ref="contentId" casevalue="0" caseref="programType"/>
+						<cache prefix="vod" ref="contentId" casevalue="3" caseref="programType"/>
+						<cache prefix="vod" ref="contentId" casevalue="4" caseref="programType"/>
+						<cache prefix="vod" ref="contentId" casevalue="13" caseref="programType"/>
+						<cache prefix="tvodContent" ref="contentId" casevalue="105" caseref="programType"/>
+					</convert>
+				</property>
+				<property id="original" index="6"/>
+				<property id="categoryId" index="7">
+					<convert>
+						<format type="defualt2null" ref="0"/>
+					</convert>
+				</property>
+				<property id="deviceCode">
+					<convert>
+						<cache prefix="subdevc" ref="subscriberId"/>
+					</convert>
+				</property>
+				<property id="dayOfWeek">
+					<convert>
+						<format type="week" ref="time"/>
+					</convert>
+				</property>
+			</properties>
+			<checks>
+				<check id="isunique">
+					<property id="subscriberId"/>
+					<property id="time"/>
+				</check>
+			</checks>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="insertVideoBrowserLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+		<log id="ADPlay">
+			<primarykey>
+				<keyproperty id="version">
+					<value data="1.0" />
+				</keyproperty>
+				<keyproperty id="type">
+					<value data="11" />
+				</keyproperty>
+			</primarykey>
+			<properties>
+				<property id="logId"/>
+				<property id="subscriberId" index="2"/>
+				<property id="startTime" index="3">
+					<convert>
+						<format type="msdate"/>
+					</convert>
+				</property>
+				<property id="endTime" index="4">
+					<convert>
+						<format type="msdate"/>
+					</convert>
+				</property>
+				<property id="endTimeBase0" defualt="0">
+					<convert>
+						<format type="msdate"/>
+					</convert>
+				</property>
+				<property id="adPositionCode" index="5"/>
+				<property id="channelId" index="6" nullEnable="true"/>
+				<property id="serviceId" index="7" nullEnable="true">
+					<convert>
+						<format type="defualt2null" ref=""/>
+					</convert>
+				</property>
+				<property id="convertChannelId">
+					<convert>
+						<cache prefix="sercha" ref="serviceId"/>
+					</convert>
+				</property>
+				<property id="adType" index="8"/>
+				<property id="adId" index="9"/>
+				<property id="timeZone" index="10">
+					<convert>
+						<format type="signum"/>
+					</convert>
+				</property>
+				<property id="dayOfMonth">
+					<convert>
+						<format type="month" ref="startTime"/>
+					</convert>
+				</property>
+			</properties>
+			<actionmap>
+				<action dbtype="oracle">
+					<insert sqlid="mergeADPlayLog" namespace="hitv"/>
+				</action>
+			</actionmap>
+		</log>
+	</netype>
+</hitv>

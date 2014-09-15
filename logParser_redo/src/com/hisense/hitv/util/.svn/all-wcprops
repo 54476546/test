@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dev/!svn/ver/50394/trunk/code/Parser/LogParser/src/com/hisense/hitv/util
+END
+AlarmNE.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/dev/!svn/ver/50394/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/AlarmNE.java
+END
+SpringUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/dev/!svn/ver/49927/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/SpringUtil.java
+END
+LogFileName.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/LogFileName.java
+END
+CommonUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/CommonUtil.java
+END
+LogFileConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/dev/!svn/ver/53225/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/LogFileConfig.java
+END
+AlarmDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/dev/!svn/ver/39257/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/AlarmDef.java
+END
+CalculateDate.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/dev/!svn/ver/42197/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/CalculateDate.java
+END
+NmsUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/dev/!svn/ver/50394/trunk/code/Parser/LogParser/src/com/hisense/hitv/util/NmsUtil.java
+END

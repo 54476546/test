@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="TVODContent">
+
+    <typeAlias alias="TVODContentVO" type="com.hisense.hitv.programcontent.domain.TVODContentVO"/>
+
+    <resultMap id="TVOD-Content-Result" class="TVODContentVO">
+        <result property="programId" column="programId"/>
+        <result property="contentId" column="contentId"/>
+    </resultMap>
+
+    <select id="getAllTVODContent" resultMap="TVOD-Content-Result">
+        select distinct contentid, programid
+        from TVODContent
+        order by contentid
+    </select>
+
+    <select id="getTVODByContentId" resultMap="TVOD-Content-Result">
+        select distinct contentid, programid
+        from TVODContent
+        where contentId = #contentId#
+        order by contentid
+    </select>
+</sqlMap>

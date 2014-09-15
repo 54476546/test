@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dev/!svn/ver/51712/trunk/code/Parser/LogParser/config/logModel
+END
+Log_Model_Ps.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dev/!svn/ver/58244/trunk/code/Parser/LogParser/config/logModel/Log_Model_Ps.xml
+END
+Log_Model_SNS.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/dev/!svn/ver/55484/trunk/code/Parser/LogParser/config/logModel/Log_Model_SNS.xml
+END
+Log_Model_GTTermination.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/dev/!svn/ver/60814/trunk/code/Parser/LogParser/config/logModel/Log_Model_GTTermination.xml
+END
+Log_Model_stvchannel.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/dev/!svn/ver/51411/trunk/code/Parser/LogParser/config/logModel/Log_Model_stvchannel.xml
+END
+Log_Model_PF.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dev/!svn/ver/58244/trunk/code/Parser/LogParser/config/logModel/Log_Model_PF.xml
+END
+Log_Model_Ade.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/dev/!svn/ver/56355/trunk/code/Parser/LogParser/config/logModel/Log_Model_Ade.xml
+END
+Log_Model_Sdps.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/dev/!svn/ver/51411/trunk/code/Parser/LogParser/config/logModel/Log_Model_Sdps.xml
+END
+Log_Model_Termination.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/dev/!svn/ver/60814/trunk/code/Parser/LogParser/config/logModel/Log_Model_Termination.xml
+END
+Log_Model_Epg.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/dev/!svn/ver/58807/trunk/code/Parser/LogParser/config/logModel/Log_Model_Epg.xml
+END
+log_Model.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dev/!svn/ver/54902/trunk/code/Parser/LogParser/config/logModel/log_Model.dtd
+END
+Log_Model_Web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/dev/!svn/ver/58244/trunk/code/Parser/LogParser/config/logModel/Log_Model_Web.xml
+END
+Log_Model_stvservice.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/dev/!svn/ver/58244/trunk/code/Parser/LogParser/config/logModel/Log_Model_stvservice.xml
+END

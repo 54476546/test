@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="LogParseSqlNGB">
+
+    <typeAlias alias="dbPropertyMap" type="java.util.Hashtable"/>
+    <resultMap id="TVOD-Content-Result" class="dbPropertyMap">
+        <result property="key" column="id"/>
+        <result property="value" column="id"/>
+    </resultMap>
+
+    <select id="getSeq" resultMap="TVOD-Content-Result">
+        SELECT seq_viewlogid.nextval AS id FROM DUAL
+    </select>
+    
+    <!-- ==============termination start=================== -->
+    <update id="mergeSTVAppRunLog">
+        MERGE INTO stvapprunlog stvlog
+        USING (select #subscriberId# subscriberid, #applicationId# applicationid, #startTime# starttime,
+        #dayOfWeek# dayOfWeek
+        from dual) log
+        ON ( stvlog.dayOfWeek = log.dayOfWeek
+        and stvlog.subscriberid = log.subscriberid
+        and stvlog.applicationId = log.applicationid
+        and stvlog.startTime = log.starttime)
+        WHEN MATCHED THEN
+        UPDATE SET 
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+	        endTime = #endTime#,
+	        <isGreaterThan property="endTime" compareProperty="startTime">
+	            duration = time2sec(#endTime#) - time2sec(#startTime#),
+	        </isGreaterThan>
+	        <isLessEqual property="endTime" compareProperty="startTime">
+	            duration = 0 ,
+	        </isLessEqual>
+        </isNotEqual>
+        logFileName = #logFileName#,
+        createddate = #createdDate#
+        WHEN NOT MATCHED THEN
+        insert (logId, subscriberid, applicationId, startTime,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            endtime,
+        </isNotEqual>
+        duration, timeZone, mac, deviceCode, logFileName, dayOfWeek, createddate)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #startTime#,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            #endTime#, 
+        </isNotEqual>
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            	time2sec(#endTime#) - time2sec(#startTime#),
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            0 ,
+        </isLessEqual>
+        #timeZone#, #mac#, #deviceCode#, #logFileName#, #dayOfWeek#, #createdDate#)
+    </update>
+    
+     <insert id="insertSTVAppDownLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into stvappdownlog(logId, subscriberid, applicationId, time, timeZone, mac, deviceCode,
+        logFileName, dayOfWeek, createddate)
+        values(#logId#, #subscriberId#, #applicationId#, #time#, #timeZone#, #mac#, #deviceCode#,
+        #logFileName#, #dayOfWeek#, #createdDate#)
+    </insert>
+    
+    <insert id="insertChannelViewLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into channelviewlog(ViewLogID, SubscriberID, ChannelID, StartTime, EndTime, STBIP,
+        CreatedDate, LogFileName,DEVICEID, DEVICECODE, DAYOFMONTH, duration
+        <isGreaterEqual property="channelVersion" compareValue="1.3">
+            , timezone
+        </isGreaterEqual>
+        )
+        values(#viewLogId#, #subscriberId#, #channelId#, #startTime#, #endTime#, #stbIp#,
+        #createdDate#, #logFileName#, #deviceId#, #deviceCode#, #dayOfMonth#
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            , time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            , 0
+        </isLessEqual>
+        <isGreaterEqual property="channelVersion" compareValue="1.3">
+            , #timeZone#
+        </isGreaterEqual>
+        )
+    </insert>
+    <insert id="insertAppBrowserLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppBrowserLog(LogID ,SubscriberID ,ApplicationID ,Time ,TimeZone ,Original ,CategoryID 
+        	,DeviceCode ,LogFileName ,DayOfWeek ,CreatedDate)
+        values(#logId#, #subscriberId# ,#applicationId# ,#time# ,#timeZone# ,#original# ,#categoryId# 
+        	,#deviceCode# ,#logFileName# ,#dayOfWeek# ,#createdDate#)
+    </insert>
+    <insert id="insertAppInstallLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppInstallLog(LogID ,SubscriberID ,ApplicationID ,Time ,TimeZone ,MAC ,DeviceCode 
+        	,LogFileName ,DayOfWeek ,CreatedDate)
+        values(#logId#, #subscriberId# ,#applicationId# ,#time# ,#timeZone# ,#mac# ,#deviceCode# 
+        	,#logFileName# ,#dayOfWeek# ,#createdDate#)
+    </insert>
+    <insert id="insertAppUnInstallLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppUnInstallLog(LogID ,SubscriberID ,ApplicationID ,Time ,TimeZone ,MAC ,DeviceCode 
+        	,LogFileName ,DayOfWeek ,CreatedDate)
+        values(#logId#, #subscriberId# ,#applicationId# ,#time# ,#timeZone# ,#mac# ,#deviceCode# 
+        	,#logFileName# ,#dayOfWeek# ,#createdDate#)
+    </insert>
+    <insert id="insertAppStoreViewedLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppStorViewedLog(LogID, SubscriberID, StartTime, EndTime, TimeZone, DeviceCode
+        	, LogFileName, DayOfWeek, CreatedDate, Duration )
+        values(#logId#, #subscriberId#  ,#startTime#, #endTime# ,#timeZone# ,#deviceCode# 
+        	,#logFileName# ,#dayOfWeek# ,#createdDate#
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            , time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            , 0
+        </isLessEqual>)
+    </insert>
+    <insert id="insertVersionUpgradeLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into VersionUpgradeLog(LogID ,SubscriberID ,UpgradeTime ,OldVersion ,NewVersion ,STBIP ,DeviceCode 
+        	,IsException ,LogFileName ,DayOfWeek ,CreatedDate)
+        values(#logId#,#subscriberId# ,#upgradeTime# ,#oldVersion# ,#newVersion# ,#stbIp# ,#deviceCode# 
+        	,#isException# ,#logFileName# ,#dayOfWeek# ,#createdDate#)
+    </insert>
+    <insert id="insertVideoBrowserLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into VideoBrowserLog(LogID, SubscriberID, ProgramID, ContentID, ProgramType, Time, Original, CategoryID
+        		, DeviceCode, LogFileName, DayOfWeek, CreatedDate)
+        values(#logId#,#subscriberId# 
+        <isEqual property="programType" compareValue="5">
+        	, #contentId#, null
+        </isEqual>
+        <isNotEqual property="programType" compareValue="5">
+        	,#programId# ,#contentId# 
+        </isNotEqual>
+        ,#programType# ,#time# ,#original# 
+        	,#categoryId# ,#deviceCode# ,#logFileName# ,#dayOfWeek# ,#createdDate#)
+    </insert>
+    <update id="mergeADPlayLog">
+        MERGE INTO ADPlayLog adlog
+        USING (select #subscriberId# subscriberid, #adPositionCode# adPositionCode, #startTime# starttime,
+        #adId# adId
+        from dual) log
+        ON (adlog.adPositionCode = log.adPositionCode
+        and adlog.subscriberid = log.subscriberid
+        and adlog.adId = log.adId
+        and adlog.startTime = log.starttime)
+        WHEN MATCHED THEN
+        UPDATE SET 
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+			endTime = #endTime#,
+		</isNotEqual>
+        logFileName = #logFileName#,
+        createddate = #createdDate#
+        WHEN NOT MATCHED THEN
+        insert (LogID, SubscriberID, StartTime, AdPositionCode, 
+        	<isNotEqual property="endTime" compareProperty="endTimeBase0">
+	        	endTime,
+        	</isNotEqual>
+        	ChannelId, ServiceId, AdType, AdId, TimeZone, LogFileName, DayOfMonth ,CreatedDate)
+        values(seq_viewlogid.nextval, #subscriberId#, #startTime#, #adPositionCode#, 
+        	<isNotEqual property="endTime" compareProperty="endTimeBase0">
+	        	#endTime#,
+        	</isNotEqual>
+        	<isNotNull property="convertChannelId">
+            	#convertChannelId# ,
+        	</isNotNull>
+        	<isNull property="convertChannelId">
+            	#channelId# ,
+        	</isNull>
+        	#serviceId# ,#adType# ,#adId# ,#timeZone# ,#logFileName# ,#dayOfMonth# ,#createdDate#)
+    </update>
+    <!-- ==============termination end=================== -->
+    
+    <!-- ==============mdc start=================== -->
+    <insert id="insertVODViewLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into VODViewLog(ViewLogID, SubscriberID, ProgramID, ContentID, StartTime, EndTime, STBIP,
+        MediaStationID, MediaStationIP, CreatedDate, LogFileName, DEVICEID, isExceptionEnd, DayOfMonth, DeviceCode
+        , duration, programtype
+        <isNotEmpty property="token" >
+            ,token
+        </isNotEmpty>
+        )
+        values(#viewLogId#, #subscriberId#, #programId#, #contentId#, #startTime#, #endTime#, #stbIp#, #mediaStationId#
+        , #mediaStationIp#, #createdDate#, #logFileName#, #deviceId#,#isExceptionEnd#, #dayOfMonth#, #deviceCode#
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            , time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            , 0
+        </isLessEqual>
+        , #programType#
+        <isNotEmpty property="token" >
+            ,#token#
+        </isNotEmpty>
+        )
+    </insert>
+    <insert id="insertTVODViewLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+    	insert into TVODViewLog( viewlogid, subscriberid, channelid, programid,
+        starttime, endtime, stbip, mediastationid, mediastationip, createddate, logfilename,
+        DEVICEID,isExceptionEnd, DayOfMonth, DeviceCode, ProgramType, duration, contentid)
+        values(#viewLogId#, #subscriberId#, #channelId#, #programId#,
+        #startTime#, #endTime#, #stbIp#, #mediaStationId#, #mediaStationIp#, #createdDate#, #logFileName#,
+        #deviceId#,#isExceptionEnd#, #dayOfMonth#, #deviceCode#, #programType#
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            , time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            , 0
+        </isLessEqual>
+        , #contentId#)
+    </insert>
+    <insert id="insertADViewLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into ADViewLog(ViewLogID, SubscriberID, ProgramID, OwnerType, ADID, ADContentID, ADType, StartTime
+        , EndTime, STBIP, CreatedDate, timezone, LogFileName,DEVICEID,isExceptionEnd, DeviceCode, DayOfMonth, duration)
+        values(#viewLogId#, #subscriberId#, #programId#, #ownerType#, #adId#, #adContentId#, #adType#, #startTime#,
+        #endTime#, #stbIp#, #createdDate#, #timeZone#, #logFileName#, #deviceId#, #isExceptionEnd#, #deviceCode#, #dayOfMonth#
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            , time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            , 0
+        </isLessEqual>
+        )
+    </insert>
+    <insert id="insertTSViewLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into TimeShiftingViewLog(ViewLogID, SubscriberID, ChannelID, StartTime, EndTime, STBIP,
+        MediaStationID, MediaStationIP, CreatedDate, LogFileName, DEVICEID, isExceptionEnd, DeviceCode
+		, duration, DayOfMonth)
+        values(#viewLogId#, #subscriberId#, #channelId#, #startTime#, #endTime#, #stbIp#, #mediaStationId#,
+        #mediaStationIp#, #createdDate#, #logFileName#, #deviceId#, #isExceptionEnd#, #deviceCode#
+		<isGreaterThan property="endTime" compareProperty="startTime">
+            , time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            , 0
+        </isLessEqual>
+		, #dayOfMonth#)
+    </insert>
+    <insert id="insertTSViewLogEZ">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into TimeShiftingViewLog(ViewLogID, SubscriberID, ChannelID, StartTime, EndTime, STBIP,
+        MediaStationID, MediaStationIP, CreatedDate, LogFileName, DEVICEID, isExceptionEnd, DeviceCode
+		, duration, DayOfMonth,MDCduration)
+        values(#viewLogId#, #subscriberId#, #channelId#, #startTime#, #endTime#, #stbIp#, #mediaStationId#,
+        #mediaStationIp#, #createdDate#, #logFileName#, #deviceId#, #isExceptionEnd#, #deviceCode#
+		<isGreaterThan property="endTime" compareProperty="startTime">
+            , time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            , 0
+        </isLessEqual>, #dayOfMonth#, #mdcDuration#)
+    </insert>
+    <!-- ==============mdc end=================== -->
+    
+    <!-- ==============ps start=================== -->
+    <insert id="insertSTBStatusLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STBStatusLog(ViewLogID, SubscriberID, ChangeDate, Isvalid, status, STBIP, DeviceID
+        	, CreatedDate, LogFileName, DeviceCode)
+        values(#viewLogId#, #subscriberId#, #changeDate#, #isValid#, #status#, #stbIp#, #deviceId#
+        	, #createdDate#, #logFileName#, #deviceCode#)
+    </insert>
+    <!-- ==============ps end=================== -->
+    
+    <!-- ==============epg start=================== -->    
+    <insert id="insertUIPageLog">
+    	<selectKey resultClass="java.lang.Long" keyProperty="pageLogSEQ">
+            SELECT seq_pagelogseq.nextval AS id FROM DUAL
+        </selectKey>
+        insert into UIPageLog(PageLogSEQ, SubscriberID, HotelId, PageTitle, PageURL, AccessDate, LogFileName
+        	, DeviceID, CreatedDate, ModuleCode, STBIP, DeviceCode, DayOfWeek)
+        values(#pageLogSEQ#, #subscriberId#, #hotelId#, #pageTitle#, #pageUrl#, #accessDate#
+        	,#logFileName#, #deviceId#, #createdDate#, #module#, #stbIp#, #deviceCode#, #dayOfWeek#)
+    </insert>
+    <insert id="insertADAccessLog">
+    	<selectKey resultClass="java.lang.Long" keyProperty="pageLogSEQ">
+            SELECT seq_pagelogseq.nextval AS id FROM DUAL
+        </selectKey>
+        insert into ADAccessLog(ADLogSEQ, ADPositionID, ADID, ADType, AccessDate, HotelId, LogFileName
+        	, DeviceID, SubscriberID, PageTitle, ModuleCode, STBIP, DeviceCode, DayOfWeek, CreatedDate)
+        values(#pageLogSEQ#, #adPositionId# ,#adId# ,#adType# ,#accessDate# ,#hotelId# ,#logFileName# ,#deviceId# 
+        	,#subscriberId# ,#pageTitle# ,#module# ,#stbIp# ,#deviceCode# ,#dayOfWeek#, #createdDate#)
+    </insert>
+    <insert id="insertEpgBrowserLog">
+    	<selectKey resultClass="java.lang.Long" keyProperty="pageLogSEQ">
+            SELECT seq_pagelogseq.nextval AS id FROM DUAL
+        </selectKey>
+        insert into EPGBrowserLog(LogID ,SubscriberID ,StartTime ,Action ,PageUrl ,STBIP ,DeviceCode 
+        	,LogFileName ,DayOfWeek ,CreatedDate)
+        values(#pageLogSEQ#, #subscriberId# ,#startTime# ,#action# ,#pageUrl# ,#stbIp# ,#deviceCode# 
+        	,#logFileName# ,#dayOfWeek# ,#createdDate#)
+    </insert>
+    <!-- ==============epg end=================== -->
+</sqlMap>

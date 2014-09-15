@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HitvDBUser">
+
+    <typeAlias alias="HitvDBUserVO" type="com.hisense.hitv.dbcp.domain.HitvDBUserVO"/>
+
+    <resultMap id="HitvDBUser-Reslut-List" class="HitvDBUserVO">
+        <result property="dbUser" column="dbuser"/>
+        <result property="dbPassword" column="dbpasswd"/>
+    </resultMap>
+
+    <select id="getHitvDBUserByUser" resultMap="HitvDBUser-Reslut-List">
+        select * from hitvdbuser
+        where dbuser = #dbUser#
+    </select>
+</sqlMap>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="logparser" default="base_build" basedir=".">
+	<property name="app.name" value="logparser"/>
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="config.dir" location="${basedir}/config"/>
+	<property name="sh.dir" location="${basedir}/sh"/>
+	<property name="Log.dir" location="${basedir}/Log"/>
+	<property name="src.dir.test" value="${basedir}/test" />
+	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="lib.dir.build" value="${basedir}/checklib" />
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+	<property name="build.classes.test" value="${build.dir}/testclasses"/>
+	<property name="build.report" value="${build.dir}/report"/>
+	<property name="build.report.checkstyle" value="${build.report}/checkstyle"/>
+	<property name="build.report.findbugs" value="${build.report}/findbugs"/>
+	<property name="build.report.junit" value="${build.report}/junit"/>
+	<property name="build.report.coverage" value="${build.report}/coverage"/>
+	<property name="build.report.coverage.classes" value="${build.report.coverage}/classes"/>
+	<property name="build.doc" value="${build.dir}/doc"/>
+	<property name="dist.dir" value="${basedir}/dist"/>
+	<property name="dist.dir.config" value="${dist.dir}/config"/>
+	<property name="dist.dir.lib" value="${dist.dir}/libs"/>
+	<property name="dist.dir.sh" value="${dist.dir}/sh"/>
+	<property name="dist.dir.Log" value="${dist.dir}/Log"/>
+	
+
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="build-classpath">
+		<path refid="master-classpath" />
+		<fileset dir="${lib.dir.build}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${build.classes}" />
+		<pathelement location="${build.classes.test}" />
+	</path>
+	
+	<pathconvert property="mf.classpath" pathsep=" " targetos="unix">
+		<path refid="master-classpath"/>
+		<map from="${lib.dir}/" to="libs/"/>
+	</pathconvert>
+
+
+	<taskdef classpathref="build-classpath" resource="tasks.properties" />
+	
+	<target name="base_build" depends="init,checkstyle,findbugs,javadoc,coverage,apprelease,clear" />
+	
+	<target name="clean">
+		<delete dir="${dist.dir}"/>
+		<delete dir="${build.dir}"/>
+		<delete quiet="true">
+			<fileset dir="${basedir}">
+				<include name="cobertura.ser" />
+				<include name="cobertura.log" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${build.classes.test}"/>
+		<mkdir dir="${build.report.checkstyle}"/>
+		<mkdir dir="${build.report.findbugs}"/>
+		<mkdir dir="${build.report.junit}"/>
+		<mkdir dir="${build.report.coverage.classes}"/>
+		<mkdir dir="${build.doc}"/>
+		<mkdir dir="${dist.dir.config}"/>
+		<mkdir dir="${dist.dir.lib}"/>
+	</target>
+
+	<target name="checkstyle">
+		<echo>start checkstyle...</echo>
+		<taskdef resource="checkstyletask.properties" classpath="${lib.dir.build}/checkstyle-5.6-all.jar" />
+		<checkstyle failOnViolation="false" config="${lib.dir.build}/HiTV_Check.xml">
+			<classpath refid="master-classpath" />
+			<fileset dir="${src.dir}">
+				<include name="**/*.java" />
+			</fileset>
+			<formatter type="xml" toFile="${build.report.checkstyle}/checkstyle_result.xml" />
+		</checkstyle>
+		<xslt basedir="${build.report.checkstyle}" destdir="${build.report.checkstyle}" 
+			includes="checkstyle_result.xml" style="${lib.dir.build}/checkstyle-noframes.xsl">
+		</xslt>
+	</target>
+
+	<target name="compile" depends="init">
+		<echo>start compile...</echo>
+		<javac encoding="UTF-8" srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="on" nowarn="on" debug="on" debuglevel="${debuglevel}">
+			<classpath refid="master-classpath"/>
+		</javac>
+		<copy todir="${build.classes}">
+			<fileset dir="${src.dir}">
+				<include name="*.properties"/>
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<taskdef name="findbugs" classpath="${lib.dir.build}/findbugs-ant.jar" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+	<target name="findbugs" depends="compile">
+		<echo>start findbugs...</echo>
+		<findbugs home="${lib.dir.build}" output="xml" outputFile="${build.report.findbugs}/findbugs_result.xml" jvmargs="-Xmx1024m">
+			<sourcePath path="${src.dir}" />
+			<class location="${build.classes}" />
+		</findbugs>
+	</target>
+	
+	<target name="javadoc" depends="compile">
+		<echo>start javadoc...</echo>
+		<javadoc sourcepath="${src.dir}" use="true" packagenames="com.hisense.*" 
+		    charset="UTF-8" encoding="UTF-8" docencoding="UTF-8"
+		    destdir="${build.doc}" private="true" windowtitle="${app.name} Doc">
+			<classpath refid="master-classpath"></classpath>
+		</javadoc>
+	</target>
+	
+	<target name="junit" depends="compile">	
+		<echo>start junit...</echo>		
+		<javac srcdir="${src.dir.test}" destdir="${build.classes.test}" debug="on" encoding="UTF-8" debuglevel="${debuglevel}" target="1.6">
+			<classpath refid="build-classpath" />
+		</javac>
+		<copy todir="/usr/${app.name}/config">
+			<fileset dir="${config.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<junit printsummary="false" fork="yes">
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${basedir}/cobertura.ser" />
+			<classpath location="${build.report.coverage.classes}" />
+			<classpath refid="build-classpath" />
+			<formatter type="brief" usefile="false"/>
+			<formatter type="xml"/>
+			<batchtest todir="${build.report.junit}">
+				 <fileset dir="${src.dir.test}">
+		            <include name="**/*.*"/>
+		         </fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${build.report.junit}">
+			<fileset dir="${build.report.junit}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${build.report.junit}" />
+		</junitreport>
+	</target>
+	
+	<target name="instrument" depends="compile">
+		<echo>start instrument...</echo>
+		<cobertura-instrument todir="${build.report.coverage.classes}">
+			<fileset dir="${build.classes}">
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+	
+	<target name="coverage" depends="instrument, junit">
+		<echo>start coverage...</echo>
+		<cobertura-report srcdir="${src.dir}" destdir="${build.report.coverage}" />
+		<cobertura-report srcdir="${src.dir}" destdir="${build.report.coverage}" format="xml" />
+	</target>
+
+
+	<target name="jar" depends="compile">
+		<echo>start jar...</echo>
+		<jar destfile="${dist.dir}/${app.name}.jar"  basedir="${build.classes}">
+			<include name="**/*.class"/>
+			<include name="**/*.xml"/>
+			<include name="**/*.properties"/>
+			<manifest>
+				<attribute name="Build-By" value="${user.name}" />
+				<attribute name="Main-class" value="com.hisense.hitv.service.LogParserService" />
+				<attribute name="Class-Path" value="${mf.classpath}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="apprelease" depends="jar">
+		<echo>start apprelease...</echo>
+		<copy todir="${dist.dir.lib}">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir.sh}">
+			<fileset dir="${sh.dir}">
+				<include name="*.sh" />
+			</fileset>
+		</copy>	
+		<copy todir="${dist.dir.config}">
+			<fileset dir="${config.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir.Log}">
+			<fileset dir="${Log.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+		<tar destfile="${app.name}.tar" longfile="gnu" >
+			<tarfileset dir="${dist.dir}" mode="777" prefix="${app.name}"/>
+		</tar>
+		<copyfile dest="/usr/${app.name}.tar" src="${app.name}.tar"/>
+	</target>
+	
+	
+	<target name="clear">
+		<delete quiet="true">
+			<fileset dir="${basedir}">
+				<include name="cobertura.ser" />
+				<include name="cobertura.log" />
+			</fileset>
+		</delete>
+	</target>
+
+	
+
+</project>

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dev/!svn/ver/49927/trunk/code/Parser/LogParser/src/com/hisense/hitv/filter
+END
+DataFilterImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/dev/!svn/ver/49927/trunk/code/Parser/LogParser/src/com/hisense/hitv/filter/DataFilterImpl.java
+END
+FileDirFilterImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/filter/FileDirFilterImpl.java
+END
+IDataFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/dev/!svn/ver/38753/trunk/code/Parser/LogParser/src/com/hisense/hitv/filter/IDataFilter.java
+END

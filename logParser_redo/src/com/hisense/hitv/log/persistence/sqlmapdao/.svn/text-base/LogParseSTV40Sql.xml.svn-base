@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="LogParseSqlSTV">
+
+    <typeAlias alias="dbPropertyMap" type="java.util.Hashtable"/>
+    
+    <!-- ==============stv4.0 start=================== -->
+    <!-- 3.7.1	SmartTVChannel日志文件内容(STMP) 
+    <insert id="insertSTVChannelLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into stvchannellog(viewlogid, subscriberid, mac, channelname, status, viewtime, isvalid, createddate,
+        logfilename)
+        values(#viewLogId#, #subscriberId#, #mac#, #channelName#, #status#, #viewTime#, #valid#, #createdDate#, 
+        #logFileName#)
+    </insert>-->
+    <!-- 3.7.2	SmartTVService日志文件内容(STMP) 
+    <insert id="insertSTVServiceViewLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into stvserviceviewlog(viewlogid, subscriberid, mac, viewtime, servicename, url, dayofcreated,
+        createddate, logfilename
+        <isNotEqual compareValue="1.0f" property="version">
+            ,ip
+        </isNotEqual>
+        )
+        values(#viewLogId#, #subscriberId#, #mac#, #viewTime#, #serviceName#, #url#, #dayOfCreated#,
+        #createdDate#, #logFileName#
+        <isNotEqual compareValue="1.0f" property="version">
+            , #ip#
+        </isNotEqual>
+        )
+    </insert>-->
+    
+    <!-- 3.7.3.1	AppInstall -->
+    <insert id="insertSTVAppInstallLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppInstallLog(logid,deviceid,apppackage,time,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #time#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSTV50AppInstallLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppInstallLog(logid,deviceid,apppackage,appversion,time,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#,#appVersion# ,#time#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSTV40AppDownLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppDownLog(logid,deviceid,apppackage,time,timezone
+        	,logfilename,dayofweek,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #time#, #timeZone#
+        	,#logFileName#, #dayOfWeek#, #createdDate#,#version#,#type#)
+    </insert>
+    
+    <!-- 3.7.3.2	AppUnInstall-->
+    <insert id="insertSTVAppUnInstallLog">
+        <selectKey resultClass="java.lang.Long" keyProperty="logId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into STVAppUnInstallLog(logid,deviceid,apppackage,time,timezone
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #time#, #timeZone#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>    
+    <!-- 3.7.3.3	APPRun -->
+    <insert id="insertSMTV40STVAppRunLog">
+        INSERT INTO stvapprunlog (logId, deviceId, appPackage, startTime,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            endTime,
+        </isNotEqual>
+        duration,timeZone, logFileName, dayOfWeek, createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #startTime#,
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            #endTime#,
+        </isNotEqual>
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            	time2sec(#endTime#) - time2sec(#startTime#),
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            0 ,
+        </isLessEqual>
+        #timeZone#, #logFileName#, #dayOfWeek#, #createdDate# ,#version#,#type#)
+    </insert>
+    <insert id="insertSMTV50STVAppRunLog">
+        INSERT INTO stvapprunlog (logId, deviceId, appPackage, startTime
+        <isPropertyAvailable property="appVersion" prepend=",">
+        	appVersion
+        </isPropertyAvailable>
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            ,endTime
+        </isNotEqual>
+        ,duration,timeZone, logFileName
+        <isPropertyAvailable property="dayOfWeek" prepend=",">
+        	dayOfWeek
+        </isPropertyAvailable>
+        ,createddate,version,type
+        <isPropertyAvailable property="storageSize" prepend=",">
+        	storageSize
+        </isPropertyAvailable>
+        )
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #startTime#
+        <isPropertyAvailable property="appVersion" prepend=",">
+        	#appVersion#
+        </isPropertyAvailable>
+        <isNotEqual property="endTime" compareProperty="endTimeBase0">
+            ,#endTime#
+        </isNotEqual>
+        <isGreaterThan property="endTime" compareProperty="startTime">
+            ,time2sec(#endTime#) - time2sec(#startTime#)
+        </isGreaterThan>
+        <isLessEqual property="endTime" compareProperty="startTime">
+            ,0
+        </isLessEqual>
+        ,#timeZone#, #logFileName#
+        <isPropertyAvailable property="dayOfWeek" prepend=",">
+        	#dayOfWeek#
+        </isPropertyAvailable>
+        ,#createdDate#,#version#,#type#
+        <isPropertyAvailable property="storageSize" prepend=",">
+        	#storageSize#
+        </isPropertyAvailable>)
+    </insert>
+    <!-- 3.7.3.4	AppFault 应用故障-->
+    <insert id="insertSTVAppFaultLog">
+        insert into STVAppFaultLog(logid,deviceid,apppackage,time,timezone,appversion
+        	,faulttype,faultmsg,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #appPackage#, #time#, #timeZone#, #appVersion#
+        	, #faultType#, #faultMsg#,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!-- 3.7.3.5	LauncherRecommendList核心云服务 推荐位-->
+    <insert id="insertLauncherRecommendListLog">
+        insert into LauncherRecommendListLog(logid,deviceid,time,navigation,timezone,objecttype,objectid
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #navigation#, #timeZone#, #objectType#, #objectId#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>    
+    <!--3.7.3.6	LancherNavigationAppRun 核心云服务 导航区启动应用-->
+    <insert id="insertLauncherNavigationAppRunLog">
+        insert into LauncherNavigationAppRunLog(logid,deviceid,time,timezone,apppackage,navigation
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #timeZone#, #appPackage#, #navigation#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!--3.7.3.7	LauncherCategoryBrowser 核心云服务 导航区分类浏览-->
+    <insert id="insertLauncherCategoryBrowserLog">
+        insert into LauncherCategoryBrowserLog(logid,deviceid,starttime,timezone,apppackage
+        	,navigation,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #startTime#, #timeZone#, #appPackage#, #navigation#
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!--3.7.3.8	SmartUpgrade 智能升级-->
+    <insert id="insertTerminationSmartUpdateLog">
+        insert into TerminalSmartUpgradeLog(logid,deviceid,time,timezone,upgradetype,filesize
+        	,startdowntime,enddowntime,isexception,exceptionmsg,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #timeZone#, #upgradeType#, #fileSize#, #startDownTime#
+        	, #endDownTime#, #isException#, #exceptionMsg#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!--3.7.3.9	FaultDiagnosis故障诊断-->
+    <insert id="insertFaultDiagnosisLog">
+        insert into FaultDiagnosisLog(logid,deviceid,starttime,endtime,timezone,diagnosisobject
+        	,diagnosistype,diagnosisresult,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #startTime#,#endTime#, #timeZone#, #diagnosisObject#
+        	, #diagnosisType#, #diagnosisResult#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!--3.7.3.10	BootNavigation开机导航-->
+    <insert id="insertBootNavigationLog">
+        insert into BootNavigationLog(logid,deviceid,starttime,endtime,timezone,nettype
+        	,accounttype,searchchanneltype,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #startTime#,#endTime#, #timeZone#, #netType#
+        	, #accountType#, #searchChannelType#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insert50BootNavigationLog">
+        insert into BootNavigationLog(logid,deviceid,starttime,endtime,timezone,nettype
+            ,SpeaktoitAssistantLearnType,SpeaktoitAssistantLearnResult,GestureLearnType,GestureLearnResult
+        	,accounttype,searchchanneltype,logfilename,dayofcreated,createddate,version,type
+        	<isPropertyAvailable property="language" prepend=",">
+        	language
+        	</isPropertyAvailable>
+        	<isPropertyAvailable property="area" prepend=",">
+        	area
+        	</isPropertyAvailable>)
+        values(seq_viewlogid.nextval, #deviceId#, #startTime#,#endTime#,#timeZone#, #netType#,#SpeaktoitAssistantLearnType#
+            ,#SpeaktoitAssistantLearnType#,#GestureLearnType#,#GestureLearnResult#
+        	, #accountType#, #searchChannelType#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#
+        	<isPropertyAvailable property="language" prepend=",">
+        	#language#
+        	</isPropertyAvailable>
+        	<isPropertyAvailable property="area" prepend=",">
+        	#area#
+        	</isPropertyAvailable>)
+    </insert>
+    <!--3.7.3.11	Speaktoit Assistant语音助手-->
+    <insert id="insertSpeaktoitAssistantLog">
+        insert into SpeaktoitAssistantLog(logid,deviceid,time,timezone,commandtype
+        	,command,isException,exceptionMsg,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#, #time#, #timeZone#, #commandType#, #command#, 
+        	#isException#, #exceptionMsg#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!--3.7.3.12	LiveChannel 电视汇点播直播频道-->
+    <insert id="insertLiveChannelLog">
+        insert into LiveChannelViewLog(viewlogid,deviceid,starttime,endtime,timezone,channelid
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #startTime#,#endTime#, #timeZone#, #channelId#
+        	, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insert50LiveChannelLog">
+        insert into LiveChannelViewLog(viewlogid,deviceid,starttime,endtime,timezone,channelid
+        	,loginName,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #startTime#,#endTime#, #timeZone#, #channelId#
+        	,#loginName#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>    
+    <!--3.7.3.13	DTVChannel-->
+    <insert id="insertDTVChannelViewLog">
+        insert into DTVChannelViewLog(viewlogid,deviceid,time,timezone,ChannelSId,Status
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #time#, #timeZone#, #channelSId#, #status#
+        	, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insert50DTVChannelViewLog">
+        insert into DTVChannelViewLog(viewlogid,deviceid,time,timezone,ChannelSId,Status
+        	<isPropertyAvailable property="loginName" prepend=",">
+        	loginName
+        	</isPropertyAvailable>
+        	<isPropertyAvailable property="channelName" prepend=",">
+        	channelName
+        	</isPropertyAvailable>
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #time#, #timeZone#, #channelSId#, #status#
+        	<isPropertyAvailable property="loginName" prepend=",">
+        	#loginName# 
+        	</isPropertyAvailable>
+        	<isPropertyAvailable property="channelName" prepend=",">
+        	#channelName# 
+        	</isPropertyAvailable>
+        	,#logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>  
+    <!--3.7.3.14	SPProgram 第三方SP节目播放-->
+    <insert id="insertSPViewLog">
+        insert into SPViewLog(viewlogid,deviceid,time,timezone,ProgramName
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #time#, #timeZone#, #programName#
+        	, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insert50SPViewLog">
+        insert into SPViewLog(viewlogid,deviceid,time,timezone,ProgramName
+        	,programSource,loginName,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #time#, #timeZone#, #programName#
+        	,#programSource#,#loginName#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!--3.7.3.15	MultiScreenInteraction 多平互动功能点使用-->
+    <insert id="insertMScreenInteractionLog">
+        insert into MScreenInteractionLog(logid,deviceid,starttime,endtime,timezone,functiontype
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #deviceId#,  #startTime#, #endTime#, #timeZone#, #functionType#
+        	, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert> 
+    <!--3.7.5.1	SmartUpgrade 智能升级-->
+    <insert id="insertSDPSSmartUpgradeLog">
+        insert into SDPSSmartUpgradeLog(logid ,subscriberid,requesttime,reponsetime,ip,currentversion
+        	,nextVersion,isupgrade,upgradetype,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#,  #requestTime#,#reponseTime#, #ip#, #currentVersion#
+        	, #nextVersion#, #isUpgrade#, #upgradeType#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>  
+    <!-- 3.7.4.1	EPGBrowser    
+    <insert id="insertStvEpgBrowserLog">
+    	<selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into EPGBrowserLog(LogID ,SubscriberID ,StartTime ,Action ,PageUrl ,IP  
+        	,LogFileName ,DayOfCreated ,CreatedDate)
+        values(#viewLogId#, #subscriberId# ,#time# ,#action# ,#pageUrl# ,#ip#
+        	,#logFileName# ,#dayOfCreated# ,#createdDate#)
+    </insert> 
+    <insert id="insertSearchViewLogLog">
+    	<selectKey resultClass="java.lang.Long" keyProperty="viewLogId">
+            SELECT seq_viewlogid.nextval AS id FROM DUAL
+        </selectKey>
+        insert into SEARCHVIEWLOG(LogID ,SubscriberID ,SearchTime ,SearchKey ,SearchType ,IP  
+        	,LogFileName ,DayOfCreated ,CreatedDate)
+        values(#viewLogId#, #subscriberId# ,#time# ,#keyword# ,#searchmode# ,#ip#
+        	,#logFileName# ,#dayOfCreated# ,#createdDate#)
+    </insert>-->    
+    <!-- 3.7.4.2	AppBrowser -->
+    <insert id="insertSTVAppBrowserLog">
+        insert into STVAppBrowserLog(logid,subscriberid,applicationid,time,navigation
+        	,categoryid,ip,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #time#,#navigation#
+        	,#categoryId#, #ip#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!-- 3.7.4.3	AppListBrowser -->
+    <insert id="insertSTVAppListBrowserLog">
+        insert into STVAppListBrowserLog(logid,subscriberid,time,navigation
+        	,ip,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #time#,#navigation#
+        	, #ip#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!-- 3.7.4.4	AppShare  -->
+    <insert id="insertSTVAppShareLog">
+        insert into STVAppShareLog(logid,subscriberid,applicationid,time,ip
+        	,logfilename,dayofcreated,createddate,version,type
+        	<isPropertyAvailable property="timeZone" prepend=",">
+        	timeZone
+        	</isPropertyAvailable>)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #time#, #ip#
+        	, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#
+        	<isPropertyAvailable property="timeZone" prepend=",">
+        	#timeZone#
+        	</isPropertyAvailable>)
+    </insert>
+    <!-- 3.7.4.5	App Search   -->
+    <insert id="insertSTVAppSearchLog">
+        insert into STVAppSearchLog(logid,subscriberid,searchtime,searchkey,ip
+        	,logfilename,dayofcreated,createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #searchTime#, #searchKey#, #ip#
+        	, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!-- 3.8.4.6 AppOrdered 通过网站订购应用日志 -->
+    <insert id="insertSTVAppOrderedLog">
+        insert into stvapporderedlog(logId, subscriberid, applicationId, time, ip,
+        logFileName, dayOfCreated, createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #time#, #ip#,
+        #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertSMTV40STVAppDownLog">
+        insert into stvappdownlog(logId, subscriberid, applicationId, time, ip,coustomerId,
+        fileType,logFileName, dayOfWeek, createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #applicationId#, #time#, #ip#,#coustomerId#,
+        #fileType#,#logFileName#, #dayOfWeek#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertRecommendBitLog">
+        insert into recommendbitlog(logId, subscriberid, deviceId, time, recommendBitCode, 
+        objectType, objectId, timeZone, logFileName, dayOfCreated, createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #deviceId#, #time#, #recommendBitCode#, #objectType#, 
+        #objectId#, #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <insert id="insertAppStartLog">
+        insert into appstartlog(logId, subscriberid, deviceId, time, appPackage, 
+        timeZone, logFileName, dayOfCreated, createddate,version,type)
+        values(seq_viewlogid.nextval, #subscriberId#, #deviceId#, #time#, #appPackage#,
+        #timeZone#, #logFileName#, #dayOfCreated#, #createdDate#,#version#,#type#)
+    </insert>
+    <!-- ==============stv end=================== -->
+</sqlMap>

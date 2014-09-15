@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ChannelTimeProgram">
+
+    <typeAlias alias="channelTimeProgramVO" type="com.hisense.hitv.cache.domain.ChannelTimeProgramVO"/>
+
+    <resultMap id="ChannelTimeProgram-Result" class="channelTimeProgramVO">
+        <result property="channelId" column="channelid"/>
+        <result property="startTime" column="starttime"/>
+        <result property="endTime" column="endtime"/>
+        <result property="programName" column="eventname"/>
+        <result property="programCode" column="eventcode"/>
+        <result property="eventId" column="eventid"/>
+    </resultMap>
+    <select id="getAllChannelTimeProgram" resultMap="ChannelTimeProgram-Result" parameterClass="java.util.HashMap">
+       select distinct d2.channelid, d2.starttime, d1.eventname, d2.eventcode, d2.eventid, d2.endtime 
+		from DChannelEvent d1,Dchannelschedule d2 where d1.eventid=d2.eventid
+		and d2.starttime &gt;= time2sec(gmtsysdate - #startOffset#/24) and d2.starttime &lt;= time2sec(gmtsysdate + #endOffset#/24)
+		order by d2.channelid, d2.starttime
+    </select>
+    <select id="getProgramByChannelTime" resultMap="ChannelTimeProgram-Result" >
+       select distinct d2.channelid, d2.starttime, d1.eventname, d2.eventcode, d2.eventid, d2.endtime 
+		from DChannelEvent d1,Dchannelschedule d2 where d1.eventid=d2.eventid
+		and d2.starttime &lt;= #startTime# and d2.channelid = #channelId#
+    </select>
+    
+</sqlMap>
