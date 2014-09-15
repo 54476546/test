@@ -50,7 +50,7 @@
 
 	<taskdef classpathref="build-classpath" resource="tasks.properties" />
 	
-	<target name="base_build" depends="init,checkstyle,findbugs,javadoc,coverage,apprelease,clear" />
+	<target name="base_build" depends="init,checkstyle,findbugs,javadoc,apprelease,clear" />
 	
 	<target name="clean">
 		<delete dir="${dist.dir}"/>
