@@ -51,7 +51,8 @@ public class CacheException extends Exception {
     /**
      * @return the message
      */
-    public String getMessage() {
+    @Override
+	public String getMessage() {
         return message;
     }
     

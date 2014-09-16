@@ -20,7 +20,8 @@ public class DataFilterImpl implements IDataFilter {
      * @param offset  校验的偏移量，index + offset <= length
      * @return true/false
      */
-    public boolean isfiltered(String[] data, int lineNum, int index
+    @Override
+	public boolean isfiltered(String[] data, int lineNum, int index
         , int offset) {
         boolean flag = false;
         int start = (index < data.length ? index : data.length);
@@ -46,7 +47,8 @@ public class DataFilterImpl implements IDataFilter {
      * @param lineNum 待校验的数据在日志文件中的行数
      * @return true/false
      */
-    public boolean isfiltered(String[] data, int lineNum) {
+    @Override
+	public boolean isfiltered(String[] data, int lineNum) {
         return isfiltered(data, lineNum, 0, data.length);
     }
 }

@@ -18,7 +18,8 @@ public class AlarmNE implements NE {
     /**
      * 
      */
-    public void getConfig() {
+    @Override
+	public void getConfig() {
         logger.info("begin get config");
     }
 
@@ -26,7 +27,8 @@ public class AlarmNE implements NE {
      * 
      * @param arg0 
      */
-    public void setConfig(List<Param> arg0) {
+    @Override
+	public void setConfig(List<Param> arg0) {
         logger.info("begin set config");
     }
 }

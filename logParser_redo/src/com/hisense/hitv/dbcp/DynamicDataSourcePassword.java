@@ -251,7 +251,8 @@ public class DynamicDataSourcePassword implements InitializingBean {
     /**
      * InitializingBean接口方法afterPropertiesSet实例化。
      */
-    public void afterPropertiesSet() {
+    @Override
+	public void afterPropertiesSet() {
         try {
             Properties pros = propertyConfigurer.getPros();
             String rac = pros.getProperty(RAC);

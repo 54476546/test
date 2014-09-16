@@ -37,7 +37,8 @@ public class SpringUtil {
      * @return context
      */
     public static ApplicationContext getContext() {
-        return SpringUtil.getInstance().context;
+        SpringUtil.getInstance();
+		return SpringUtil.context;
     }
     /**
      * 获取bean

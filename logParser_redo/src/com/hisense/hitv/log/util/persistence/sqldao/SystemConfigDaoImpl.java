@@ -21,7 +21,8 @@ public class SystemConfigDaoImpl extends SqlMapClientDaoSupport implements ISyst
      * @return 系统时间偏移量
      * @throws DataAccessException DB操作异常
      */
-    public int getServerOffSet() throws DataAccessException {
+    @Override
+	public int getServerOffSet() throws DataAccessException {
         String value =
             (String) getSqlMapClientTemplate().queryForObject(GET_SYSTEM_CONFIG_BY_ITEM_NAME, "SystemTimeZone");
         if (value == null) {
@@ -36,7 +37,8 @@ public class SystemConfigDaoImpl extends SqlMapClientDaoSupport implements ISyst
      * @return 开始时间偏移量
      * @throws DataAccessException DB操作异常
      */
-    public int getChannelEventCacheStartOffset() throws DataAccessException {
+    @Override
+	public int getChannelEventCacheStartOffset() throws DataAccessException {
         String value =
             (String) getSqlMapClientTemplate()
                 .queryForObject(GET_SYSTEM_CONFIG_BY_ITEM_NAME, "ChannelEventCacheBefore");
@@ -52,7 +54,8 @@ public class SystemConfigDaoImpl extends SqlMapClientDaoSupport implements ISyst
      * @return 结束时间偏移量
      * @throws DataAccessException DB操作异常
      */
-    public int getChannelEventCacheEndOffset() throws DataAccessException {
+    @Override
+	public int getChannelEventCacheEndOffset() throws DataAccessException {
         String value =
             (String) getSqlMapClientTemplate().queryForObject(GET_SYSTEM_CONFIG_BY_ITEM_NAME, "ChannelEventCacheAfter");
         if (value == null) {
@@ -67,7 +70,8 @@ public class SystemConfigDaoImpl extends SqlMapClientDaoSupport implements ISyst
      * @return Logparser批量提交数据的行数
      * @throws SQLException DB操作异常
      */
-    public int getLogparserBatchSize() throws SQLException {
+    @Override
+	public int getLogparserBatchSize() throws SQLException {
         String value = (String) getSqlMapClient().queryForObject(GET_SYSTEM_CONFIG_BY_ITEM_NAME, "LogparserBatchSize");
         if (value == null) {
             return 0;

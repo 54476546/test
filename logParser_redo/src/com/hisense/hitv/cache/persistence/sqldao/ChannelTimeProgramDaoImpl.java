@@ -20,7 +20,8 @@ public class ChannelTimeProgramDaoImpl extends SqlMapClientDaoSupport implements
      * @return ChannelTimeProgramVO列表
      * @throws DataAccessException DB操作异常
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<ChannelTimeProgramVO> getAllChannelTimeProgram(Map<String, Object> paramMap) 
         throws DataAccessException {
         return getSqlMapClientTemplate().queryForList("getAllChannelTimeProgram", paramMap);
@@ -32,7 +33,8 @@ public class ChannelTimeProgramDaoImpl extends SqlMapClientDaoSupport implements
      * @return ChannelTimeProgramVO对象
      * @throws DataAccessException DB操作异常
      */
-    public ChannelTimeProgramVO getProgramByChannelTime(ChannelTimeProgramVO channelTimeVO) throws DataAccessException {
+    @Override
+	public ChannelTimeProgramVO getProgramByChannelTime(ChannelTimeProgramVO channelTimeVO) throws DataAccessException {
         return (ChannelTimeProgramVO) getSqlMapClientTemplate().queryForObject("getProgramByChannelTime",
             channelTimeVO);
     }

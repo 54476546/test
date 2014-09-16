@@ -37,7 +37,8 @@ public class GZIPCompressImpl implements ICompressLogFile {
      * @param compressType 压缩类型
      * @return true：成功，false：失败
      */
-    public boolean compress(String fileName, String filePath, String compressPath, String compressType) {
+    @Override
+	public boolean compress(String fileName, String filePath, String compressPath, String compressType) {
         FileInputStream in = null;
         BufferedOutputStream out = null;
         String tempOutFileName = null;
@@ -90,7 +91,8 @@ public class GZIPCompressImpl implements ICompressLogFile {
      * @param decompressPath 输出文件全路径
      * @return true：成功，false：失败
      */
-    public boolean decompress(String outFilename,
+    @Override
+	public boolean decompress(String outFilename,
         String inFilePath, String decompressPath) {
         GZIPInputStream in = null;
         BufferedOutputStream out = null;

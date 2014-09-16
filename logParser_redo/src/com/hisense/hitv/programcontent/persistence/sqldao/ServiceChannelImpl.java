@@ -17,7 +17,8 @@ public class ServiceChannelImpl extends SqlMapClientDaoSupport implements IServi
      * @return ServiceChannelVO列表
      * @throws DataAccessException DB操作异常
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<ServiceChannelVO> getAllServiceChannel() throws DataAccessException {
         return getSqlMapClientTemplate().queryForList("getAllServiceChannel", null);
     }
@@ -28,7 +29,8 @@ public class ServiceChannelImpl extends SqlMapClientDaoSupport implements IServi
      * @return ServiceChannelVO对象
      * @throws DataAccessException DB操作异常
      */
-    public ServiceChannelVO getServiceChannelById(long serviceId) throws DataAccessException {
+    @Override
+	public ServiceChannelVO getServiceChannelById(long serviceId) throws DataAccessException {
         return (ServiceChannelVO) getSqlMapClientTemplate().queryForObject("getServiceChannelById", serviceId);
     }
 }

@@ -148,7 +148,8 @@ public abstract class AbstractParser implements IParser {
     /**
      * 日志解析
      */
-    public abstract void processLogFile();
+    @Override
+	public abstract void processLogFile();
 
     /**
      * @return the stringDataFilter

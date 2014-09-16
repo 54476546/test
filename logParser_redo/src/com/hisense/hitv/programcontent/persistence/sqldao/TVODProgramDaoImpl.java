@@ -19,7 +19,8 @@ public class TVODProgramDaoImpl extends SqlMapClientDaoSupport implements ITVODP
      * @return TVODProgram记录列表
      * @throws DataAccessException DB操作异常
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<TVODProgramVO> getAllTVODProgram() throws DataAccessException {
         return getSqlMapClientTemplate().queryForList("getAllTVODProgram", null);
     }
@@ -30,7 +31,8 @@ public class TVODProgramDaoImpl extends SqlMapClientDaoSupport implements ITVODP
      * @return TVODProgram记录对象
      * @throws DataAccessException DB操作异常
      */
-    public TVODProgramVO getTVODProgramById(long programId) throws DataAccessException {
+    @Override
+	public TVODProgramVO getTVODProgramById(long programId) throws DataAccessException {
         return (TVODProgramVO) getSqlMapClientTemplate().queryForObject("getTVODProgramById", programId);
     }
 }

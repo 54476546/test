@@ -32,7 +32,8 @@ public class LogFileFacadeImpl implements ILogFileFacade {
      * @param logFileVO logfile参数对象
      * @throws SQLException DB操作异常
      */
-    public void insertLogFile(LogFileVO logFileVO) throws SQLException {
+    @Override
+	public void insertLogFile(LogFileVO logFileVO) throws SQLException {
         logFileDao.insertLogFile(logFileVO);
     }
     /**
@@ -41,7 +42,8 @@ public class LogFileFacadeImpl implements ILogFileFacade {
      * @return true：已存在，false：不存在
      * @throws SQLException DB操作异常
      */
-    public boolean checkFileNameExist(String fileName) throws SQLException {
+    @Override
+	public boolean checkFileNameExist(String fileName) throws SQLException {
         LogFileVO exist = logFileDao.getLogFileByFileName(fileName);
         if (exist != null) {
             return true;
@@ -55,7 +57,8 @@ public class LogFileFacadeImpl implements ILogFileFacade {
      * @return gmtsysdate
      * @throws SQLException 
      */
-    public Date getCurrentDBTime() throws SQLException {
+    @Override
+	public Date getCurrentDBTime() throws SQLException {
         return logFileDao.getCurrentDBTime();
     }
 }

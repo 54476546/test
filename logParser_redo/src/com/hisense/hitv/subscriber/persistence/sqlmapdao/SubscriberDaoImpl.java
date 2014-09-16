@@ -21,7 +21,8 @@ public class SubscriberDaoImpl extends SqlMapClientDaoSupport implements ISubscr
      * @return Subscriber记录对象
      * @throws DataAccessException DB操作异常
      */
-    public SubscriberVO getSubscriberById(long subscriberId) throws DataAccessException {
+    @Override
+	public SubscriberVO getSubscriberById(long subscriberId) throws DataAccessException {
         return (SubscriberVO) getSqlMapClientTemplate().queryForObject("getSubscriberById", subscriberId);
     }
 
@@ -31,7 +32,8 @@ public class SubscriberDaoImpl extends SqlMapClientDaoSupport implements ISubscr
      * @return Subscriber记录对象
      * @throws DataAccessException DB操作异常
      */
-    public SubscriberVO getSubscriberByMac(String mac) throws DataAccessException {
+    @Override
+	public SubscriberVO getSubscriberByMac(String mac) throws DataAccessException {
         return (SubscriberVO) getSqlMapClientTemplate().queryForObject("getSubscriberByMac", mac);
     }
 
@@ -40,7 +42,8 @@ public class SubscriberDaoImpl extends SqlMapClientDaoSupport implements ISubscr
      * @return 用户总数
      * @throws DataAccessException DB操作异常
      */
-    public Integer getSubscriberCount() throws DataAccessException {
+    @Override
+	public Integer getSubscriberCount() throws DataAccessException {
         return (Integer) getSqlMapClientTemplate().queryForObject("getSubscriberCount");
     }
 
@@ -50,7 +53,8 @@ public class SubscriberDaoImpl extends SqlMapClientDaoSupport implements ISubscr
      * @return Subscriber记录列表
      * @throws DataAccessException DB操作异常
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<SubscriberVO> getSubscribers(SubscriberVO subscriberVO) throws DataAccessException {
         return getSqlMapClientTemplate().queryForList("getSubscribers", subscriberVO);
     }

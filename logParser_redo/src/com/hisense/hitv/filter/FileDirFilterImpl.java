@@ -27,7 +27,8 @@ public class FileDirFilterImpl implements FilenameFilter {
      * @param name 文件扩展名
      * @return  true：文件类型正确，false：文件类型错误
      */
-    public boolean accept(File dir, String name) {
+    @Override
+	public boolean accept(File dir, String name) {
         boolean extensionFlag =
             name.toLowerCase().endsWith(fileExtension.toLowerCase());
         boolean prefixFlag =

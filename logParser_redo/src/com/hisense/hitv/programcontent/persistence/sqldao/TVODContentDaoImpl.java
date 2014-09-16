@@ -20,7 +20,8 @@ public class TVODContentDaoImpl extends SqlMapClientDaoSupport implements ITVODC
      * @return TVODContent记录对象
      * @throws DataAccessException DB操作异常
      */
-    public TVODContentVO getTVODByContentId(long contentId) throws DataAccessException {
+    @Override
+	public TVODContentVO getTVODByContentId(long contentId) throws DataAccessException {
         return (TVODContentVO) getSqlMapClientTemplate().queryForObject("getTVODByContentId", contentId);
     }
 
@@ -29,7 +30,8 @@ public class TVODContentDaoImpl extends SqlMapClientDaoSupport implements ITVODC
      * @return TVODContent记录列表
      * @throws DataAccessException DB操作异常
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<TVODContentVO> getAllTVODContent() throws DataAccessException {
         return getSqlMapClientTemplate().queryForList("getAllTVODContent", null);
     }

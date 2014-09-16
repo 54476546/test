@@ -19,7 +19,8 @@ public class InternetSubscriberDaoImpl extends SqlMapClientDaoSupport implements
      * @return Subscriber记录列表
      * @throws DataAccessException DB操作异常
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<InternetSubscriberVO> getInternetSubscribers() throws DataAccessException {
         return getSqlMapClientTemplate().queryForList("getInternetSubscribers", null);
     }
@@ -30,7 +31,8 @@ public class InternetSubscriberDaoImpl extends SqlMapClientDaoSupport implements
      * @return InternetSubscriber记录对象
      * @throws DataAccessException DB操作异常
      */
-    public InternetSubscriberVO getInternetSubscriberById(long subscriberId) throws DataAccessException {
+    @Override
+	public InternetSubscriberVO getInternetSubscriberById(long subscriberId) throws DataAccessException {
         return (InternetSubscriberVO) getSqlMapClientTemplate().queryForObject("getInternetSubscriberById",
             subscriberId);
     }

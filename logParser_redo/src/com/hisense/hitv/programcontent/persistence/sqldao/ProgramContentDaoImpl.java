@@ -18,7 +18,8 @@ public class ProgramContentDaoImpl extends SqlMapClientDaoSupport implements
      * @return ProgramContentVO列表
      * @throws DataAccessException DB操作异常 
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<ProgramContentVO> getAllVODContent() throws DataAccessException {
         return getSqlMapClientTemplate().queryForList("getAllVODContent", null);
     }
@@ -29,7 +30,8 @@ public class ProgramContentDaoImpl extends SqlMapClientDaoSupport implements
      * @return ProgramContentVO对象
      * @throws DataAccessException DB操作异常 
      */
-    public ProgramContentVO getVODContentById(long contentId) throws 
+    @Override
+	public ProgramContentVO getVODContentById(long contentId) throws 
     DataAccessException {
         return (ProgramContentVO) getSqlMapClientTemplate().queryForObject(
             "getVODContentById", contentId);

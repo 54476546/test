@@ -102,7 +102,8 @@ public class LogFileParser extends AbstractParser {
     /**
      * @param netypeVO the LogXmlNetypeVO to set
      */
-    public void setNetype(LogXmlNetypeVO netypeVO) {
+    @Override
+	public void setNetype(LogXmlNetypeVO netypeVO) {
         this.netypeVO = netypeVO;
     }
 
@@ -116,7 +117,8 @@ public class LogFileParser extends AbstractParser {
     /**
      * 线程启动
      */
-    public void run() {
+    @Override
+	public void run() {
         Thread.currentThread().setName(netypeVO.getNeTypeId());
         this.processLogFile();
     }
@@ -124,7 +126,8 @@ public class LogFileParser extends AbstractParser {
     /**
      * 解析，导入数据库，备份，删除
      */
-    public void processLogFile() {
+    @Override
+	public void processLogFile() {
         // 初始化异步工作服务    
         AsynService asynService = (AsynService) SpringUtil.getBean("asynService");
         nmsUtil = new NmsUtil(this.logFileConfig);

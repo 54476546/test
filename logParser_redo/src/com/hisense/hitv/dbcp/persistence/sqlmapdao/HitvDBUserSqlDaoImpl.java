@@ -32,7 +32,8 @@ public class HitvDBUserSqlDaoImpl extends SqlMapClientDaoSupport implements IHit
      * @param dbUser pubuser名
      * @return 用户信息
      */
-    public HitvDBUserVO getHitvDBUserByUser(String dbUser) {
+    @Override
+	public HitvDBUserVO getHitvDBUserByUser(String dbUser) {
         return (HitvDBUserVO) getSqlMapClientTemplate().queryForObject("getHitvDBUserByUser", dbUser);
     }
 }

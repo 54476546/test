@@ -213,7 +213,7 @@ public class Formattor {
         if (convertBefore.toString().length() > 10) {
             throw new ParseException("Time is overlength!", 0);
         }
-        return (Object) CalculateDate.parseSecLong2Date(
+        return CalculateDate.parseSecLong2Date(
             Long.parseLong(convertBefore.toString()));
     }
     
@@ -229,7 +229,7 @@ public class Formattor {
         if (convertBefore.toString().length() > 13) {
             throw new ParseException("MSTime is overlength!", 0);
         }
-        return (Object) CalculateDate.parseMsLongToDate(
+        return CalculateDate.parseMsLongToDate(
             Long.parseLong(convertBefore.toString()));
     }
     
@@ -240,7 +240,7 @@ public class Formattor {
      */
     public Object format15StrDate() throws ParseException {
         Object convertBefore = propertyMap.get(propertyName);
-        return (Object) CalculateDate.parse15StrToDate(
+        return CalculateDate.parse15StrToDate(
             convertBefore.toString());
     }
     
@@ -251,7 +251,7 @@ public class Formattor {
      */
     public Object formatMonth() throws ParseException {
         Object convertBefore = propertyMap.get(convertVO.getRefProperty());
-        return (Object) CalculateDate.parseLongDateMonth(
+        return CalculateDate.parseLongDateMonth(
             ((Date) convertBefore).getTime());
     }
     

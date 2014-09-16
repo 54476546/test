@@ -70,7 +70,7 @@ public class CommonUtil {
             int ascNumber = 0; 
             int pNum = 0; 
             for (int i = 0; i < curCharArray.length; i++) {
-                ascNumber = (int) curCharArray[i];
+                ascNumber = curCharArray[i];
                 if (ascNumber > MAX_ASCII || ascNumber < 0) { 
                     pNum = pNum + ORACLE_CHINESE_BYTE; 
                 } else { 

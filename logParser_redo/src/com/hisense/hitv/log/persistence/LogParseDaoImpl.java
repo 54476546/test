@@ -40,7 +40,8 @@ public class LogParseDaoImpl extends SqlMapClientDaoSupport implements
      * @param fileName 文件名
      * @throws SQLException DB操作异常
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public void insertLogData(Map<String, Object> logMap, String fileName)
         throws SQLException {
         String sql = null;
@@ -54,7 +55,7 @@ public class LogParseDaoImpl extends SqlMapClientDaoSupport implements
                 arr = mapEntry.getKey().split("/");
                 sql = arr[1];
                 linenum = Integer.parseInt(arr[0]);
-                getSqlMapClient().insert(sql, (Map<String, Object>) mapEntry.getValue());
+                getSqlMapClient().insert(sql, mapEntry.getValue());
             }
             getSqlMapClient().executeBatch();
             getSqlMapClient().commitTransaction();
@@ -84,7 +85,8 @@ public class LogParseDaoImpl extends SqlMapClientDaoSupport implements
      * @return 操作记录件数
      * @throws SQLException DB操作异常
      */
-    public int updateLogData(Map<String, Object> logMap, String updateSql)
+    @Override
+	public int updateLogData(Map<String, Object> logMap, String updateSql)
         throws SQLException {
         return getSqlMapClientTemplate().update(updateSql, logMap);
     }
