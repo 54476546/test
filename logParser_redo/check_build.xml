@@ -27,11 +27,11 @@
 	<property name="dist.dir.Log" value="${dist.dir}/Log"/>
 	
 
-	<!--<path id="master-classpath">
+	<path id="master-classpath">
 		<fileset dir="${lib.dir}">
 			<include name="*.jar"/>
 		</fileset>
-	</path>-->
+	</path>
 	
 	<path id="build-classpath">
 		<path refid="master-classpath" />
